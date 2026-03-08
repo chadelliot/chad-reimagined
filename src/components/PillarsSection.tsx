@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-
+import michaelsLogo from "@/assets/michaels-logo.svg";
+import gapLogo from "@/assets/gap-logo.svg";
 const pillars = [
   {
     num: "01",
