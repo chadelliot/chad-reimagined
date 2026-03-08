@@ -23,6 +23,11 @@ const jobs = [
       { label: "Marketing Budget", value: "$7M" },
       { label: "Team Size", value: "11 People" },
     ],
+    featured: {
+      label: "NYSE Ceremony",
+      cta: "Watch Video",
+      href: "https://tv.nyse.com/videos/qxo-inc-nyse-qxo-rings-the-opening-bell-1",
+    },
   },
   {
     period: "2018 — 2021",
