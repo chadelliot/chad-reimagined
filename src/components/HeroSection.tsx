@@ -63,7 +63,7 @@ const HeroSection = () => {
 
         {/* Scroll indicator */}
         <div
-          className="absolute bottom-10 left-[80px] flex items-center gap-3 text-[10px] tracking-[0.2em] uppercase text-muted-foreground animate-fadeIn-delay"
+          className="absolute bottom-10 left-6 md:left-[80px] hidden md:flex items-center gap-3 text-[10px] tracking-[0.2em] uppercase text-muted-foreground animate-fadeIn-delay"
         >
           <div className="w-[60px] h-[1px] bg-border relative overflow-hidden">
             <div
