@@ -8,10 +8,10 @@ const tabs = [
   { id: "activation", label: "Activation" },
 ];
 
-/* ── STORY OVERVIEW (Visify style) ── */
-const StoryOverview = () => (
+/* ── QXO STORY HERO (always visible at top) ── */
+const QxoStoryHero = () => (
   <div className="bg-card" style={{
-    padding: "120px 80px 0",
+    padding: "120px 80px 80px",
     backgroundImage: "linear-gradient(rgba(47,163,127,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(47,163,127,0.045) 1px, transparent 1px)",
     backgroundSize: "56px 56px",
   }}>
@@ -76,6 +76,50 @@ const StoryOverview = () => (
           >
             {node.btn}
           </button>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+/* ── STRATEGIC OVERVIEW TAB ── */
+const StoryOverview = () => (
+  <div className="bg-card" style={{ padding: "120px 80px 0" }}>
+    <SectionHeader num="01" title="Strategic" em="Overview" />
+    <div className="max-w-[600px] mb-5">
+      <p className="font-sans text-[14px] text-muted-foreground leading-[1.8]">
+        Modern growth systems are built by connecting marketing intelligence, customer segmentation, and activation infrastructure into a single operating model. Rather than isolated campaigns, this approach focuses on building a scalable framework that turns unified data into measurable revenue outcomes.
+      </p>
+    </div>
+
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pb-20">
+      {[
+        {
+          phase: "BUILD.", desc: "Architect from zero.",
+          detail: "Marketing funnel · tracking ecosystem · MarTech stack · CDP deployment",
+          tags: ["Funnel Tracking", "CDP", "Attribution"], year: "2021 — Foundation",
+        },
+        {
+          phase: "SCALE.", desc: "Turn data into revenue.",
+          detail: "30K leads/qtr · 10K qualified · 1,500 new customers per quarter",
+          tags: ["30K Leads/Qtr", "AI Segmentation", "Growth Lab"], year: "2022–23 — Acceleration",
+        },
+        {
+          phase: "IMPACT.", desc: "$750M → $1.25B digital revenue.",
+          detail: "Influencing $2.5B in branch sales · NYSE · Beacon Building acquisition",
+          tags: ["$1.25B Revenue", "$2.5B Influenced", "NYSE Podium"], year: "2024 — Transformation",
+        },
+      ].map((item, i) => (
+        <div key={i} className="bg-card" style={{ border: "1px solid hsl(var(--border))", borderRadius: 8, padding: "28px 24px" }}>
+          <p className="font-display text-[18px] font-extrabold text-foreground">{item.phase}</p>
+          <p className="font-sans text-[13px] text-primary font-medium mt-1">{item.desc}</p>
+          <p className="font-mono text-[11px] text-muted-foreground mt-3 italic">{item.detail}</p>
+          <div className="flex flex-wrap gap-1.5 mt-4">
+            {item.tags.map((t) => (
+              <span key={t} className="text-[10px] bg-secondary text-foreground px-3 py-1 rounded">{t}</span>
+            ))}
+          </div>
+          <p className="font-mono text-[10px] tracking-[0.15em] text-muted-foreground uppercase mt-4">{item.year}</p>
         </div>
       ))}
     </div>
@@ -393,6 +437,9 @@ const QxoStorySection = () => {
 
   return (
     <div>
+      {/* QXO Story hero — always visible */}
+      <QxoStoryHero />
+
       {/* Tab bar */}
       <div className="sticky top-16 z-40 bg-background/95 backdrop-blur-sm" style={{ borderBottom: "1px solid hsl(var(--border))", padding: "16px 80px" }}>
         <div className="flex gap-2">
