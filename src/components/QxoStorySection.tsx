@@ -150,7 +150,7 @@ const StoryOverview = () => {
       </div>
 
       {/* Desktop: positioned layout with SVG arrows */}
-      <div ref={canvasRef} className="relative w-full hidden md:block" style={{ height: 680 }}>
+      <div ref={canvasRef} className="relative w-full hidden md:block mt-[20px]" style={{ height: 680 }}>
         <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1200 680" preserveAspectRatio="xMidYMid meet">
           {/* Arrow 1: right of D in BUILD → top of A in SCALE */}
           <path
