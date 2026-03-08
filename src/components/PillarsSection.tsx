@@ -18,7 +18,7 @@ const pillars = [
     stat: "$1B+",
     statLabel: "Digital Revenue Influence",
     link: "/approach",
-    linkLabel: "View QXO Story →",
+    linkLabel: "View My Approach →",
   },
   {
     num: "02",
