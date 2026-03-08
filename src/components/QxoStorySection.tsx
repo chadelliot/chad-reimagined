@@ -664,8 +664,8 @@ const QxoStorySection = () => {
               onClick={() => setActiveTab(tab.id)}
               className={`relative px-4 md:px-6 py-3 text-[10px] md:text-[11px] font-sans tracking-[0.12em] uppercase transition-all cursor-pointer whitespace-nowrap ${
                 activeTab === tab.id
-                  ? "bg-card text-primary font-semibold z-10"
-                  : "bg-secondary text-muted-foreground hover:text-foreground"
+                  ? "text-card-foreground font-semibold z-10"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
               style={{
                 borderTopLeftRadius: 8,
@@ -677,6 +677,12 @@ const QxoStorySection = () => {
                   ? "1px solid hsl(var(--card))"
                   : "1px solid hsl(var(--border))",
                 marginBottom: -1,
+                background: activeTab === tab.id
+                  ? "hsl(var(--primary))"
+                  : "hsl(var(--card))",
+                color: activeTab === tab.id
+                  ? "hsl(var(--primary-foreground))"
+                  : undefined,
               }}
             >
               {tab.label}
