@@ -134,7 +134,7 @@ const TimelineSection = () => {
             </div>
 
             {/* Company & role */}
-            <div className="font-display text-[22px] font-extrabold tracking-[-0.02em] mb-1 flex items-baseline gap-3" style={{ color: "hsl(var(--charcoal))" }}>
+            <div className="font-display text-[18px] md:text-[22px] font-extrabold tracking-[-0.02em] mb-1 flex flex-wrap items-baseline gap-1 md:gap-3" style={{ color: "hsl(var(--charcoal))" }}>
               {job.company}
               {job.companyDescriptor && (
                 <span className="font-sans text-[11px] font-normal text-muted-foreground tracking-[0.05em] italic">
