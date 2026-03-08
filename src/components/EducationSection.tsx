@@ -10,7 +10,7 @@ const certifications = [
 
 const EducationSection = () => {
   return (
-    <section style={{ padding: "0 80px 60px" }} className="bg-background">
+    <section className="bg-background px-6 pb-[60px] md:px-20">
       <SectionHeader num="06" title="Education &" em="Credentials" />
 
       {/* Education cards */}
