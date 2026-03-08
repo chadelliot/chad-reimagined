@@ -41,6 +41,7 @@ const pillars = [
   },
   {
     num: "03",
+    tag: "Entrepreneurship",
     title: "Founder",
     subtitle: "& Ecommerce",
     org: "Hidden Gems · Amazon & Walmart",
