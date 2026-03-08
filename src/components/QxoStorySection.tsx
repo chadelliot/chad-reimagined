@@ -114,6 +114,12 @@ const StoryOverview = () => {
         </div>
       </div>
 
+      {/* Section intro */}
+      <p className="max-w-[520px] font-sans text-[15px] md:text-[16px] leading-[1.85] text-muted-foreground mb-2">
+        <span className="font-display font-semibold text-foreground text-[16px] md:text-[17px]">Refined through real-world execution,</span>{" "}
+        this framework brings a repeatable approach to building scalable marketing engines.{" "}
+        <span className="font-hand text-primary text-[19px]">Here's an example:</span>
+      </p>
 
       {/* Mobile: stacked layout */}
       <div className="md:hidden flex flex-col gap-8 py-8">
