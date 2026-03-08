@@ -121,7 +121,7 @@ const StoryOverview = () => {
       </p>
 
       {/* Mobile: stacked layout */}
-      <div className="md:hidden flex flex-col gap-8 py-8">
+      <div className="md:hidden flex flex-col gap-8 pt-[28px] pb-8">
         {nodes.map((node, i) => (
           <div key={i}>
             <div className="font-hand text-[36px] font-bold text-foreground leading-none mb-1.5 underline decoration-primary underline-offset-4">
