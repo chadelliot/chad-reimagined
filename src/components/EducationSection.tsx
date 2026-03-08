@@ -1,3 +1,5 @@
+import { SectionHeader } from "./PillarsSection";
+
 const certifications = [
   { icon: "☁️", name: "Salesforce Certified Pardot Consultant" },
   { icon: "⚡", name: "Salesforce Certified Pardot Specialist" },
@@ -8,39 +10,40 @@ const certifications = [
 
 const EducationSection = () => {
   return (
-    <section className="py-24 px-6">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex items-center gap-4 mb-4">
-          <span className="text-primary font-bold text-sm">06</span>
-          <div className="w-8 h-[1px] bg-primary" />
-        </div>
-        <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-16">
-          Education & <span className="font-display italic text-primary">Credentials</span>
-        </h2>
+    <section style={{ padding: "120px 80px" }} className="bg-background">
+      <SectionHeader num="06" title="Education &" em="Credentials" />
 
-        <div className="space-y-8 mb-16">
-          {[
-            { degree: "Master of Science", field: "Marketing Analytics & Communications", school: "Illinois Institute of Technology", years: "2013 – 2016" },
-            { degree: "Bachelor of Science", field: "Business Administration – Marketing Management", school: "Illinois Institute of Technology", years: "2008 – 2012" },
-          ].map((edu) => (
-            <div key={edu.degree} className="border border-border rounded-xl p-8">
-              <p className="text-sm text-muted-foreground">{edu.school}</p>
-              <p className="text-xl font-bold text-foreground mt-1">{edu.degree}</p>
-              <p className="text-sm text-primary mt-1">{edu.field}</p>
-              <p className="text-xs text-muted-foreground mt-2">{edu.years}</p>
+      {/* Education cards */}
+      <div
+        className="grid grid-cols-2 mb-16"
+        style={{ gap: "1px", background: "hsl(var(--border))", border: "1px solid hsl(var(--border))" }}
+      >
+        {[
+          { school: "Illinois Institute of Technology", degree: "Master of Science", field: "Marketing Analytics & Communications", years: "2013 – 2016" },
+          { school: "Illinois Institute of Technology", degree: "Bachelor of Science", field: "Business Administration – Marketing Management", years: "2008 – 2012" },
+        ].map((edu) => (
+          <div key={edu.degree} className="bg-card flex gap-6 items-start" style={{ padding: 48, borderLeft: "3px solid transparent" }}>
+            <div className="flex-1">
+              <div className="font-display text-[22px] font-extrabold text-primary mb-1.5">{edu.school}</div>
+              <div className="font-display text-[15px] font-bold mb-1">{edu.degree}</div>
+              <div className="font-sans text-[12px] text-muted-foreground tracking-[0.08em]">{edu.field}</div>
+              <div className="font-mono text-[11px] text-muted-foreground mt-2 tracking-[0.05em]">{edu.years}</div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+      </div>
 
-        <h3 className="text-lg font-bold text-foreground mb-6">Professional Certifications</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {certifications.map((cert) => (
-            <div key={cert.name} className="flex items-center gap-4 border border-border rounded-lg p-4">
-              <span className="text-2xl">{cert.icon}</span>
-              <p className="text-sm font-medium text-foreground">{cert.name}</p>
-            </div>
-          ))}
-        </div>
+      {/* Certifications */}
+      <div
+        className="grid grid-cols-5"
+        style={{ gap: "1px", background: "hsl(var(--border))", border: "1px solid hsl(var(--border))" }}
+      >
+        {certifications.map((cert) => (
+          <div key={cert.name} className="bg-card hover:bg-secondary transition-colors text-center" style={{ padding: "20px 16px" }}>
+            <div className="text-[22px] mb-2.5">{cert.icon}</div>
+            <div className="font-sans text-[10px] text-muted-foreground tracking-[0.08em] leading-[1.5]">{cert.name}</div>
+          </div>
+        ))}
       </div>
     </section>
   );
