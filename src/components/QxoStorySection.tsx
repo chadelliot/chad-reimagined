@@ -121,7 +121,7 @@ const StoryOverview = () => {
       </p>
 
       {/* Mobile: stacked layout */}
-      <div className="md:hidden flex flex-col gap-8 py-8">
+      <div className="md:hidden flex flex-col gap-8 pt-[28px] pb-8">
         {nodes.map((node, i) => (
           <div key={i}>
             <div className="font-hand text-[36px] font-bold text-foreground leading-none mb-1.5 underline decoration-primary underline-offset-4">
@@ -150,7 +150,7 @@ const StoryOverview = () => {
       </div>
 
       {/* Desktop: positioned layout with SVG arrows */}
-      <div ref={canvasRef} className="relative w-full hidden md:block" style={{ height: 680 }}>
+      <div ref={canvasRef} className="relative w-full hidden md:block mt-[20px]" style={{ height: 680 }}>
         <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1200 680" preserveAspectRatio="xMidYMid meet">
           {/* Arrow 1: right of D in BUILD → top of A in SCALE */}
           <path
