@@ -86,10 +86,17 @@ const PillarsSection = () => {
             {/* Top accent line on hover */}
             <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary transform scale-x-0 origin-left transition-transform duration-400 group-hover:scale-x-100" />
 
-            <span className="font-mono text-[10px] tracking-[0.15em] uppercase text-muted-foreground">Pillar {p.num}</span>
+            <span className="font-mono text-[10px] tracking-[0.15em] uppercase text-muted-foreground">{p.tag}</span>
             <h3 className="font-display text-[22px] font-extrabold mt-2 text-foreground tracking-[-0.02em]">{p.title}</h3>
             <p className="font-display text-[22px] font-extrabold text-primary italic">{p.subtitle}</p>
             <p className="font-mono text-[9px] tracking-[0.12em] uppercase text-muted-foreground mt-3">{p.org}</p>
+            {p.logos && (
+              <div className="flex items-center gap-4 mt-3">
+                {p.logos.map((logo, li) => (
+                  <img key={li} src={logo} alt="" style={{ height: 36, width: "auto", maxWidth: 160 }} />
+                ))}
+              </div>
+            )}
             <p className="font-sans text-[12px] text-muted-foreground mt-4 leading-[1.7]">{p.description}</p>
 
             <ul className="mt-4 flex flex-col gap-2.5">
