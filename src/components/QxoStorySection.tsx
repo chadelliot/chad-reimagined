@@ -139,6 +139,35 @@ const IntelligenceTab = () => {
       </p>
 
       <div className="relative w-full" style={{ height: 520 }}>
+        {/* SVG connection lines */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" preserveAspectRatio="none">
+          {/* Source nodes to center - dashed lines */}
+          {[
+            { x1: "12%", y1: "12%", x2: "50%", y2: "50%" },
+            { x1: "12%", y1: "35%", x2: "50%", y2: "50%" },
+            { x1: "12%", y1: "58%", x2: "50%", y2: "50%" },
+            { x1: "12%", y1: "81%", x2: "50%", y2: "50%" },
+            { x1: "27%", y1: "8%", x2: "50%", y2: "50%" },
+            { x1: "27%", y1: "92%", x2: "50%", y2: "50%" },
+          ].map((l, i) => (
+            <line key={`in-${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2}
+              stroke="hsl(160, 55%, 38%)" strokeWidth="1" strokeDasharray="4 6"
+              opacity="0.5" style={{ animation: "flowDash 3s linear infinite" }}
+            />
+          ))}
+          {/* Center to output nodes - solid lines */}
+          {[
+            { x1: "50%", y1: "50%", x2: "83%", y2: "10%" },
+            { x1: "50%", y1: "50%", x2: "83%", y2: "30%" },
+            { x1: "50%", y1: "50%", x2: "83%", y2: "50%" },
+            { x1: "50%", y1: "50%", x2: "83%", y2: "70%" },
+            { x1: "50%", y1: "50%", x2: "83%", y2: "90%" },
+          ].map((l, i) => (
+            <line key={`out-${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2}
+              stroke="hsl(160, 55%, 38%)" strokeWidth="1.5" opacity="0.4"
+            />
+          ))}
+        </svg>
         {/* Source nodes - left */}
         <div className="absolute left-[2%] top-0 bottom-0 flex flex-col justify-around" style={{ width: 100 }}>
           {sources.slice(0, 4).map((s, i) => (
