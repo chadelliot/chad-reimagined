@@ -148,7 +148,7 @@ const StoryOverview = () => {
             strokeDashoffset="1000"
           />
           <polygon
-            points="492,188 508,198 496,206"
+            points="492,128 508,138 496,146"
             fill="hsl(160, 55%, 38%)"
             style={{ opacity: phase >= 2 ? 1 : 0, transition: "opacity 0.3s ease" }}
           />
