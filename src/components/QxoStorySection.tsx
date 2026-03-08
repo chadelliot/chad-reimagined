@@ -114,12 +114,6 @@ const StoryOverview = () => {
         </div>
       </div>
 
-      <SectionHeader num="01" title="Strategic" em="Overview" />
-      <div className="max-w-[600px] mb-5">
-        <p className="font-sans text-[14px] text-muted-foreground leading-[1.8]">
-          A proven, repeatable methodology — from zero infrastructure to full-scale marketing engine. The same playbook, refined to execute in 12 months, anywhere.
-        </p>
-      </div>
 
       {/* Mobile: stacked layout */}
       <div className="md:hidden flex flex-col gap-8 py-8">
