@@ -92,14 +92,32 @@ const StoryOverview = () => {
   ];
 
   return (
-    <div className="bg-card px-6 md:px-20 pt-[60px]" style={{
+    <div className="bg-card px-6 md:px-20 pt-[60px] relative" style={{
       backgroundImage: "linear-gradient(rgba(47,163,127,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(47,163,127,0.045) 1px, transparent 1px)",
       backgroundSize: "56px 56px",
     }}>
-      <SectionHeader num="01" title="Building a Scalable Marketing" em="Infrastructure for Growth" />
+      {/* 12-Month Playbook badge — top right */}
+      <div className="absolute top-4 right-4 md:top-8 md:right-8 flex items-center gap-2.5 px-4 py-3 rounded-lg border border-primary/30 bg-card shadow-sm"
+        style={{ background: "linear-gradient(135deg, rgba(47,163,127,0.08), rgba(47,163,127,0.02))" }}>
+        <div className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-primary relative">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="hsl(160, 55%, 38%)" strokeWidth="2" strokeLinecap="round">
+            <circle cx="12" cy="12" r="10" strokeDasharray="3 2" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          <div className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-primary flex items-center justify-center">
+            <svg width="8" height="8" viewBox="0 0 12 12" fill="none"><path d="M2 6.5L5 9.5L10 3" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          </div>
+        </div>
+        <div className="flex flex-col">
+          <span className="font-display text-[18px] md:text-[22px] font-extrabold text-foreground leading-none">12<span className="text-primary text-[13px] ml-0.5">mo</span></span>
+          <span className="font-sans text-[8px] md:text-[9px] tracking-[0.14em] uppercase text-muted-foreground leading-tight">Repeatable Playbook</span>
+        </div>
+      </div>
+
+      <SectionHeader num="01" title="Strategic" em="Overview" />
       <div className="max-w-[600px] mb-5">
         <p className="font-sans text-[14px] text-muted-foreground leading-[1.8]">
-          I've developed a proven playbook for building scalable marketing infrastructure from scratch — establishing the data foundation, signal strategy, segmentation model, and activation engine required to drive growth. I know how to bring together the right people, platforms, and processes to make it operational within 12 to 24 months.
+          A proven, repeatable methodology — from zero infrastructure to full-scale marketing engine. The same playbook, refined to execute in 12 months, anywhere.
         </p>
       </div>
 
@@ -651,9 +669,9 @@ const QxoStorySection = () => {
     <div>
       {/* Strategy in Action header */}
       <div className="px-6 pt-[60px] md:px-20 md:pt-20 bg-background">
-        <SectionHeader num="02" title="Strategy in" em="Action" />
+        <SectionHeader num="02" title="Building a Scalable Marketing" em="Infrastructure for Growth" />
         <p className="font-sans text-[14px] text-muted-foreground leading-[1.8] max-w-[700px] mb-8">
-          I build marketing systems that move from raw data to revenue. It starts with collection and cleaning — unifying signals across platforms into a single source of truth. From there, I orchestrate processes, build segmentation frameworks, and design activation paths that turn behavioral intelligence into measurable pipeline.
+          I've developed a proven playbook for building scalable marketing infrastructure from scratch — establishing the data foundation, signal strategy, segmentation model, and activation engine required to drive growth. I know how to bring together the right people, platforms, and processes to make it operational within 12 to 24 months.
         </p>
       </div>
 
