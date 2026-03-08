@@ -607,17 +607,19 @@ const ActivationTab = () => {
         Intelligence and segmentation are only as valuable as the system that acts on them. This layer connects unified customer profiles, behavioral signals, and workflow automation into a repeatable engine.
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-12">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-12">
         {[
-          { icon: "⬡", title: "Unified Data Layer", sub: "CDP · CRM · Signals", arrow: "segment & score" },
-          { icon: "◈", title: "Orchestration Engine", sub: "Routing · Scoring · Timing", arrow: "activate & measure" },
-          { icon: "↗", title: "Revenue Outcomes", sub: "Pipeline · CLV · ROAS", arrow: null },
+          { icon: "📈", title: "Increased Revenue", sub: "Top-line growth through precision activation", metric: "Revenue ↑" },
+          { icon: "💰", title: "Gross Margin Lift", sub: "Higher margins from smarter spend allocation", metric: "Margin ↑" },
+          { icon: "📊", title: "EBITDA Increase", sub: "Operational efficiency driving profitability", metric: "EBITDA ↑" },
+          { icon: "⚖️", title: "Unit Economics", sub: "LTV:CAC ratio optimization at scale", metric: "LTV · CAC" },
         ].map((a) => (
-          <div key={a.title} className="text-center" style={{ border: "1px solid hsl(var(--border))", borderRadius: 8, padding: "32px 24px" }}>
-            <div className="text-[28px]">{a.icon}</div>
-            <div className="font-display text-[13px] font-bold mt-2">{a.title}</div>
-            <div className="font-sans text-[11px] text-primary tracking-[0.08em]">{a.sub}</div>
-            {a.arrow && <div className="font-sans text-[10px] text-muted-foreground mt-3 italic">{a.arrow} →</div>}
+          <div key={a.title} className="relative overflow-hidden group" style={{ border: "1px solid hsl(var(--border))", borderRadius: 8, padding: "28px 20px", borderTop: "3px solid hsl(var(--primary))" }}>
+            <div className="text-[24px] mb-2">{a.icon}</div>
+            <div className="font-display text-[13px] font-bold mb-1">{a.title}</div>
+            <div className="font-sans text-[10px] text-muted-foreground leading-[1.5] mb-3">{a.sub}</div>
+            <span className="inline-block text-[9px] tracking-[0.12em] uppercase font-semibold text-primary px-2 py-0.5 rounded" style={{ background: "rgba(47,163,127,0.1)" }}>{a.metric}</span>
+            <div className="absolute bottom-0 left-0 right-0 h-[2px] transform scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" style={{ background: "hsl(var(--primary))" }} />
           </div>
         ))}
       </div>
