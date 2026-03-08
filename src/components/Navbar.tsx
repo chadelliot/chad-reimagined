@@ -24,7 +24,7 @@ const Navbar = () => {
     >
       <div className="flex items-center">
         <Link to="/" className="font-display text-[22px] md:text-[28px] font-extrabold tracking-tight text-foreground no-underline">
-          Chad <em className="text-primary">Parker</em>
+          About <em className="text-primary">Chad</em>
         </Link>
       </div>
 
