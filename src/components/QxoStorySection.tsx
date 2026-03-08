@@ -138,7 +138,7 @@ const StoryOverview = () => {
           {/* Arrow 1: right of D in BUILD → top of A in SCALE */}
           <path
             ref={arrow1Ref}
-            d="M 240 65 C 280 -40 460 -20 500 195"
+            d="M 240 5 C 280 -100 460 -80 500 135"
             fill="none"
             stroke="hsl(160, 55%, 38%)"
             strokeWidth="2.5"
@@ -148,7 +148,7 @@ const StoryOverview = () => {
             strokeDashoffset="1000"
           />
           <polygon
-            points="492,188 508,198 496,206"
+            points="492,128 508,138 496,146"
             fill="hsl(160, 55%, 38%)"
             style={{ opacity: phase >= 2 ? 1 : 0, transition: "opacity 0.3s ease" }}
           />
