@@ -6,7 +6,9 @@ const ApproachPage = () => {
   return (
     <div className="min-h-screen bg-background pt-16">
       <Navbar />
-      <QxoStorySection />
+      <div className="animate-fadeUp">
+        <QxoStorySection />
+      </div>
       <Footer />
     </div>
   );
