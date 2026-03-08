@@ -2,9 +2,9 @@ import chadHeadshot from "@/assets/chad-headshot.png";
 
 const stats = [
   { value: "$1.25B", label: "Digital Revenue Scaled" },
-  { value: "14+", label: "Years Experience" },
+  { value: "15+", label: "Years Experience" },
   { value: "30K", label: "Leads per Quarter" },
-  { value: "$500K", label: "Ecommerce Revenue" },
+  { value: "$250K", label: "Ecommerce Revenue" },
 ];
 
 const HeroSection = () => {
