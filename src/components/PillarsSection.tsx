@@ -36,8 +36,6 @@ const pillars = [
     ],
     stat: "2",
     statLabel: "National Retail Advisory Clients",
-    link: "/career",
-    linkLabel: "View Client Work →",
   },
   {
     num: "03",
