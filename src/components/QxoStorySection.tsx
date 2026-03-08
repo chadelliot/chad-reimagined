@@ -371,10 +371,7 @@ const ActivationTab = () => {
 
   return (
     <div style={{ padding: "120px 80px" }} className="bg-card">
-      <div className="flex items-center gap-5 mb-16">
-        <span className="font-mono text-[11px] text-primary tracking-[0.1em]">04 · Revenue Activation</span>
-        <div className="flex-1 h-[1px] bg-border" />
-      </div>
+      <SectionHeader num="04" title="Revenue" em="Activation" />
 
       <h2 className="font-display font-extrabold leading-none tracking-[-0.025em] mb-4" style={{ fontSize: "clamp(36px, 4vw, 54px)" }}>
         When data moves, <em className="text-primary">revenue follows.</em>
