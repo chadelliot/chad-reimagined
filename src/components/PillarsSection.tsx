@@ -115,7 +115,7 @@ const PillarsSection = () => {
               <p className="font-sans text-[10px] tracking-[0.15em] uppercase text-muted-foreground mt-1">{p.statLabel}</p>
             </div>
 
-            {p.external ? (
+            {p.link && (p.external ? (
               <a
                 href={p.link}
                 target="_blank"
@@ -131,7 +131,7 @@ const PillarsSection = () => {
               >
                 {p.linkLabel}
               </Link>
-            )}
+            ))}
           </div>
         ))}
       </div>
