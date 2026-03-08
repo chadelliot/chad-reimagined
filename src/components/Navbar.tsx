@@ -7,6 +7,7 @@ const navItems = [
   { label: "My Approach", href: "/approach" },
   { label: "Career", href: "/career" },
   { label: "Skills", href: "/skills" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const Navbar = () => {
