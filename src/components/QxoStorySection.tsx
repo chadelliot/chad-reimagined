@@ -24,6 +24,37 @@ const StoryOverview = () => (
 
     {/* Story canvas */}
     <div className="relative w-full" style={{ height: 680 }}>
+      {/* SVG hand-drawn arrows */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1200 680" preserveAspectRatio="xMidYMid meet">
+        {/* Arrow: BUILD → SCALE */}
+        <path
+          d="M 240 140 C 320 160, 380 180, 420 210 Q 440 225, 456 240"
+          fill="none"
+          stroke="hsl(160, 55%, 38%)"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeDasharray="8 6"
+          style={{ animation: "flowDash 3s linear infinite" }}
+        />
+        <polygon
+          points="450,248 462,238 456,252"
+          fill="hsl(160, 55%, 38%)"
+        />
+        {/* Arrow: SCALE → IMPACT */}
+        <path
+          d="M 700 340 C 740 360, 780 370, 800 385 Q 820 400, 816 410"
+          fill="none"
+          stroke="hsl(160, 55%, 38%)"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeDasharray="8 6"
+          style={{ animation: "flowDash 3s linear infinite" }}
+        />
+        <polygon
+          points="810,418 822,408 816,422"
+          fill="hsl(160, 55%, 38%)"
+        />
+      </svg>
       {[
         {
           label: "BUILD.",
