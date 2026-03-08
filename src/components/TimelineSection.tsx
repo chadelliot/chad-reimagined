@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { SectionHeader } from "./PillarsSection";
 
 const jobs = [
