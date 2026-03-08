@@ -30,7 +30,7 @@ const jobs = [
     featured: {
       label: "NYSE Ceremony",
       cta: "Watch Video",
-      href: "https://tv.nyse.com/videos/qxo-inc-nyse-qxo-rings-the-opening-bell-1",
+      href: "https://player.vimeo.com/video/1079926122?h=cd9bcfe954&autoplay=1",
     },
   },
   {
