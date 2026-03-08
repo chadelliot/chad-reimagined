@@ -588,8 +588,6 @@ const ActivationTab = () => {
 
   return (
     <div className="px-6 py-[60px] md:px-20 bg-card">
-      <SectionHeader num="04" title="Revenue" em="Activation" />
-
       <h2 className="font-display font-extrabold leading-none tracking-[-0.025em] mb-4" style={{ fontSize: "clamp(28px, 4vw, 54px)" }}>
         When data moves, <em className="text-primary">revenue follows.</em>
       </h2>
