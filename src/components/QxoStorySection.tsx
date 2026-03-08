@@ -5,7 +5,7 @@ const tabs = [
   { id: "overview", label: "Strategic Overview" },
   { id: "intelligence", label: "Marketing Intelligence" },
   { id: "segmentation", label: "Customer Segmentation" },
-  { id: "activation", label: "Activation" },
+  { id: "activation", label: "Revenue Activation" },
 ];
 
 /* ── STORY OVERVIEW (Visify style) ── */
@@ -24,6 +24,37 @@ const StoryOverview = () => (
 
     {/* Story canvas */}
     <div className="relative w-full" style={{ height: 680 }}>
+      {/* SVG hand-drawn arrows */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1200 680" preserveAspectRatio="xMidYMid meet">
+        {/* Arrow: BUILD → SCALE */}
+        <path
+          d="M 240 140 C 320 160, 380 180, 420 210 Q 440 225, 456 240"
+          fill="none"
+          stroke="hsl(160, 55%, 38%)"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeDasharray="8 6"
+          style={{ animation: "flowDash 3s linear infinite" }}
+        />
+        <polygon
+          points="450,248 462,238 456,252"
+          fill="hsl(160, 55%, 38%)"
+        />
+        {/* Arrow: SCALE → IMPACT */}
+        <path
+          d="M 700 340 C 740 360, 780 370, 800 385 Q 820 400, 816 410"
+          fill="none"
+          stroke="hsl(160, 55%, 38%)"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeDasharray="8 6"
+          style={{ animation: "flowDash 3s linear infinite" }}
+        />
+        <polygon
+          points="810,418 822,408 816,422"
+          fill="hsl(160, 55%, 38%)"
+        />
+      </svg>
       {[
         {
           label: "BUILD.",
@@ -108,6 +139,35 @@ const IntelligenceTab = () => {
       </p>
 
       <div className="relative w-full" style={{ height: 520 }}>
+        {/* SVG connection lines */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" preserveAspectRatio="none">
+          {/* Source nodes to center - dashed lines */}
+          {[
+            { x1: "12%", y1: "12%", x2: "50%", y2: "50%" },
+            { x1: "12%", y1: "35%", x2: "50%", y2: "50%" },
+            { x1: "12%", y1: "58%", x2: "50%", y2: "50%" },
+            { x1: "12%", y1: "81%", x2: "50%", y2: "50%" },
+            { x1: "27%", y1: "8%", x2: "50%", y2: "50%" },
+            { x1: "27%", y1: "92%", x2: "50%", y2: "50%" },
+          ].map((l, i) => (
+            <line key={`in-${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2}
+              stroke="hsl(160, 55%, 38%)" strokeWidth="1" strokeDasharray="4 6"
+              opacity="0.5" style={{ animation: "flowDash 3s linear infinite" }}
+            />
+          ))}
+          {/* Center to output nodes - solid lines */}
+          {[
+            { x1: "50%", y1: "50%", x2: "83%", y2: "10%" },
+            { x1: "50%", y1: "50%", x2: "83%", y2: "30%" },
+            { x1: "50%", y1: "50%", x2: "83%", y2: "50%" },
+            { x1: "50%", y1: "50%", x2: "83%", y2: "70%" },
+            { x1: "50%", y1: "50%", x2: "83%", y2: "90%" },
+          ].map((l, i) => (
+            <line key={`out-${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2}
+              stroke="hsl(160, 55%, 38%)" strokeWidth="1.5" opacity="0.4"
+            />
+          ))}
+        </svg>
         {/* Source nodes - left */}
         <div className="absolute left-[2%] top-0 bottom-0 flex flex-col justify-around" style={{ width: 100 }}>
           {sources.slice(0, 4).map((s, i) => (
@@ -311,10 +371,7 @@ const ActivationTab = () => {
 
   return (
     <div style={{ padding: "120px 80px" }} className="bg-card">
-      <div className="flex items-center gap-5 mb-16">
-        <span className="font-mono text-[11px] text-primary tracking-[0.1em]">04 · Revenue Activation</span>
-        <div className="flex-1 h-[1px] bg-border" />
-      </div>
+      <SectionHeader num="04" title="Revenue" em="Activation" />
 
       <h2 className="font-display font-extrabold leading-none tracking-[-0.025em] mb-4" style={{ fontSize: "clamp(36px, 4vw, 54px)" }}>
         When data moves, <em className="text-primary">revenue follows.</em>
@@ -360,19 +417,6 @@ const ActivationTab = () => {
         ))}
       </div>
 
-      {/* Bottom stats */}
-      <div className="grid grid-cols-3 mt-12" style={{ gap: "1px", background: "hsl(var(--border))", border: "1px solid hsl(var(--border))", borderRadius: 8, overflow: "hidden" }}>
-        {[
-          { label: "Revenue influenced", value: "$1.25B" },
-          { label: "Layers connected", value: "6 operating" },
-          { label: "Activation model", value: "Always-on lifecycle" },
-        ].map((s) => (
-          <div key={s.label} className="bg-card text-center" style={{ padding: "48px 32px" }}>
-            <div className="font-sans text-[11px] text-muted-foreground tracking-[0.15em] uppercase mb-2">{s.label}</div>
-            <div className="font-display text-[52px] font-extrabold text-primary leading-none tracking-[-0.03em] italic">{s.value}</div>
-          </div>
-        ))}
-      </div>
     </div>
   );
 };
