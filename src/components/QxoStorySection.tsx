@@ -493,7 +493,7 @@ const SegmentationTab = () => {
   ];
 
   return (
-    <div className="px-6 py-[60px] md:px-20 bg-background">
+    <div className="px-6 py-[60px] md:px-20 bg-card">
       <SectionHeader num="03" title="RFM" em="Segmentation" />
       <div className="max-w-[700px] mb-8 md:mb-16">
         <p className="font-sans text-[14px] text-muted-foreground leading-[1.8]">
