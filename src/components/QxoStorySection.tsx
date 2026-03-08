@@ -393,6 +393,14 @@ const QxoStorySection = () => {
 
   return (
     <div>
+      {/* QXO Story header */}
+      <div style={{ padding: "80px 80px 0" }} className="bg-background">
+        <SectionHeader num="02" title="QXO" em="Story" />
+        <p className="font-sans text-[14px] text-muted-foreground leading-[1.8] max-w-[700px] mb-8">
+          Use the tabs to move through a four-part growth story — strategic overview, marketing intelligence, customer segmentation, and activation.
+        </p>
+      </div>
+
       {/* Tab bar */}
       <div className="sticky top-16 z-40 bg-background/95 backdrop-blur-sm" style={{ borderBottom: "1px solid hsl(var(--border))", padding: "16px 80px" }}>
         <div className="flex gap-2">
