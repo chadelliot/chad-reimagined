@@ -61,11 +61,11 @@ const pillars = [
 ];
 
 const SectionHeader = ({ num, title, em }: { num: string; title: string; em: string }) => (
-  <div className="flex items-center gap-5 mb-16">
+  <div className="flex items-center gap-3 md:gap-5 mb-8 md:mb-16">
     <span className="font-mono text-[11px] text-primary tracking-[0.1em]">{num}</span>
     <h2
       className="font-display font-extrabold leading-none tracking-[-0.025em]"
-      style={{ fontSize: "clamp(36px, 4vw, 54px)" }}
+      style={{ fontSize: "clamp(28px, 4vw, 54px)" }}
     >
       {title} <em className="text-primary">{em}</em>
     </h2>
@@ -75,7 +75,7 @@ const SectionHeader = ({ num, title, em }: { num: string; title: string; em: str
 
 const PillarsSection = () => {
   return (
-    <section style={{ padding: "120px 80px" }} className="bg-background">
+    <section className="bg-background px-6 py-[60px] md:px-20">
       <SectionHeader num="01" title="Career" em="Pillars" />
       <p className="font-sans text-[14px] text-muted-foreground leading-[1.8] max-w-[600px] mb-16">
         My career spans enterprise growth leadership, advisory work for national retail brands, and entrepreneurship—united by a focus on segmentation, marketing intelligence, lifecycle strategy, and building systems that turn insight into measurable revenue growth.

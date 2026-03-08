@@ -11,7 +11,7 @@ const tabs = [
 /* ── STORY OVERVIEW with scroll-triggered sequential animation ── */
 const StoryOverview = () => {
   const canvasRef = useRef<HTMLDivElement>(null);
-  const [phase, setPhase] = useState(0); // 0=hidden, 1=node1, 2=arrow1, 3=node2, 4=arrow2, 5=node3
+  const [phase, setPhase] = useState(0);
   const hasTriggered = useRef(false);
 
   useEffect(() => {
@@ -21,7 +21,6 @@ const StoryOverview = () => {
       ([entry]) => {
         if (entry.isIntersecting && !hasTriggered.current) {
           hasTriggered.current = true;
-          // Sequential: node1 → arrow1 → node2 → arrow2 → node3
           setPhase(1);
           setTimeout(() => setPhase(2), 600);
           setTimeout(() => setPhase(3), 1500);
@@ -38,14 +37,12 @@ const StoryOverview = () => {
   const arrow1Ref = useRef<SVGPathElement>(null);
   const arrow2Ref = useRef<SVGPathElement>(null);
 
-  // Draw arrows via stroke-dashoffset
   useEffect(() => {
     if (phase >= 2 && arrow1Ref.current) {
       const p = arrow1Ref.current;
       const len = p.getTotalLength();
       p.style.strokeDasharray = `${len}`;
       p.style.strokeDashoffset = `${len}`;
-      // force reflow
       p.getBoundingClientRect();
       p.style.transition = "stroke-dashoffset 0.85s cubic-bezier(0.4,0,0.2,1)";
       p.style.strokeDashoffset = "0";
@@ -95,8 +92,7 @@ const StoryOverview = () => {
   ];
 
   return (
-    <div className="bg-card" style={{
-      padding: "120px 80px 0",
+    <div className="bg-card px-6 md:px-20 pt-[60px]" style={{
       backgroundImage: "linear-gradient(rgba(47,163,127,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(47,163,127,0.045) 1px, transparent 1px)",
       backgroundSize: "56px 56px",
     }}>
@@ -107,13 +103,42 @@ const StoryOverview = () => {
         </p>
       </div>
 
-      <div ref={canvasRef} className="relative w-full" style={{ height: 680 }}>
-        {/* SVG hand-drawn arrows */}
+      {/* Mobile: stacked layout */}
+      <div className="md:hidden flex flex-col gap-8 py-8">
+        {nodes.map((node, i) => (
+          <div key={i}>
+            <div className="font-hand text-[36px] font-bold text-foreground leading-none mb-1.5 underline decoration-primary underline-offset-4">
+              {node.label}
+            </div>
+            <div className="font-sans text-[13px] text-foreground mb-1.5">{node.sub}</div>
+            <div className="font-mono text-[11px] text-muted-foreground italic leading-[1.5] whitespace-pre-line">{node.detail}</div>
+            <div className="flex flex-wrap gap-1.5 mt-3">
+              {node.chips.map((c) => (
+                <span key={c} className="text-[10px] tracking-[0.1em] text-primary px-2.5 py-1 rounded" style={{ background: "rgba(47,163,127,0.1)", border: "1px solid hsl(var(--primary-deep))" }}>{c}</span>
+              ))}
+            </div>
+            <button className="mt-4 inline-flex items-center gap-2 text-[11px] font-sans tracking-[0.12em] uppercase text-primary border border-primary/50 px-[18px] py-[10px] rounded bg-primary/[0.06] hover:bg-primary/[0.14] hover:border-primary transition-all cursor-pointer">
+              {node.btn}
+            </button>
+            {i < nodes.length - 1 && (
+              <div className="flex justify-center mt-4">
+                <svg width="24" height="40" viewBox="0 0 24 40">
+                  <path d="M12 0 C12 20 12 20 12 32" stroke="hsl(160, 55%, 38%)" strokeWidth="2" fill="none" strokeDasharray="4 4" />
+                  <polygon points="6,30 12,38 18,30" fill="hsl(160, 55%, 38%)" />
+                </svg>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop: positioned layout with SVG arrows */}
+      <div ref={canvasRef} className="relative w-full hidden md:block" style={{ height: 680 }}>
         <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1200 680" preserveAspectRatio="xMidYMid meet">
-          {/* Arrow 1: BUILD → SCALE */}
+          {/* Arrow 1: starts right side of BUILD, curves right and down to above SCALE */}
           <path
             ref={arrow1Ref}
-            d="M 200 220 C 240 320 370 320 460 278"
+            d="M 280 80 C 380 80 400 180 456 210"
             fill="none"
             stroke="hsl(160, 55%, 38%)"
             strokeWidth="2.5"
@@ -123,14 +148,14 @@ const StoryOverview = () => {
             strokeDashoffset="1000"
           />
           <polygon
-            points="450,268 468,280 456,292"
+            points="446,202 462,216 450,224"
             fill="hsl(160, 55%, 38%)"
             style={{ opacity: phase >= 2 ? 1 : 0, transition: "opacity 0.3s ease" }}
           />
-          {/* Arrow 2: SCALE → IMPACT */}
+          {/* Arrow 2: starts right side of SCALE, curves right and down to above IMPACT */}
           <path
             ref={arrow2Ref}
-            d="M 620 420 C 680 510 790 500 880 458"
+            d="M 710 260 C 810 260 830 350 876 380"
             fill="none"
             stroke="hsl(160, 55%, 38%)"
             strokeWidth="2.5"
@@ -140,7 +165,7 @@ const StoryOverview = () => {
             strokeDashoffset="1000"
           />
           <polygon
-            points="870,448 888,458 872,470"
+            points="866,372 882,386 870,394"
             fill="hsl(160, 55%, 38%)"
             style={{ opacity: phase >= 4 ? 1 : 0, transition: "opacity 0.3s ease" }}
           />
@@ -166,13 +191,7 @@ const StoryOverview = () => {
             <div className="font-mono text-[11px] text-muted-foreground italic leading-[1.5] whitespace-pre-line">{node.detail}</div>
             <div className="flex flex-wrap gap-1.5 mt-3">
               {node.chips.map((c) => (
-                <span
-                  key={c}
-                  className="text-[10px] tracking-[0.1em] text-primary px-2.5 py-1 rounded"
-                  style={{ background: "rgba(47,163,127,0.1)", border: "1px solid hsl(var(--primary-deep))" }}
-                >
-                  {c}
-                </span>
+                <span key={c} className="text-[10px] tracking-[0.1em] text-primary px-2.5 py-1 rounded" style={{ background: "rgba(47,163,127,0.1)", border: "1px solid hsl(var(--primary-deep))" }}>{c}</span>
               ))}
             </div>
             <button className="mt-4 inline-flex items-center gap-2 text-[11px] font-sans tracking-[0.12em] uppercase text-primary border border-primary/50 px-[18px] py-[10px] rounded bg-primary/[0.06] hover:bg-primary/[0.14] hover:border-primary transition-all cursor-pointer">
@@ -185,7 +204,7 @@ const StoryOverview = () => {
   );
 };
 
-/* ── MARKETING INTELLIGENCE with curved bezier lines ── */
+/* ── MARKETING INTELLIGENCE with curved bezier lines + pulse rings ── */
 const IntelligenceTab = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -224,7 +243,6 @@ const IntelligenceTab = () => {
       return { x: r.left - cRect.left + r.width / 2, y: r.top - cRect.top + r.height / 2 };
     };
 
-    // Scale to viewBox
     const vbW = 1200;
     const vbH = 520;
     const scaleX = vbW / container.offsetWidth;
@@ -233,7 +251,6 @@ const IntelligenceTab = () => {
 
     svg.innerHTML = "";
 
-    // Input: curved bezier from source → center
     sources.forEach((s, i) => {
       const sp = toVB(elCenter(s.id));
       const cp = toVB({ x: cx, y: cy });
@@ -251,7 +268,6 @@ const IntelligenceTab = () => {
       svg.appendChild(path);
     });
 
-    // Output: curved bezier from center → output
     outputs.forEach((o, i) => {
       const op = toVB(elCenter(o.id));
       const cp = toVB({ x: cx, y: cy });
@@ -278,20 +294,15 @@ const IntelligenceTab = () => {
       ([entry]) => {
         if (entry.isIntersecting && !hasTriggered.current) {
           hasTriggered.current = true;
-          // Build wires after a tick so elements are positioned
           requestAnimationFrame(() => {
             buildWires();
             setVisible(true);
-
-            // Animate input paths
             setTimeout(() => {
               document.querySelectorAll(".orch-input-path").forEach((p) => {
                 (p as SVGElement).style.opacity = "0.6";
                 (p as SVGElement).style.animation = "flowDash 2.5s linear infinite";
               });
             }, 700);
-
-            // Draw output paths
             setTimeout(() => {
               document.querySelectorAll(".orch-output-path").forEach((p) => {
                 p.setAttribute("opacity", "0.7");
@@ -308,13 +319,45 @@ const IntelligenceTab = () => {
   }, [buildWires]);
 
   return (
-    <div className="bg-card" style={{ padding: "120px 80px" }}>
+    <div className="bg-card px-6 py-[60px] md:px-20">
       <SectionHeader num="02" title="Integrated Marketing" em="Intelligence" />
-      <p className="font-sans text-[14px] text-muted-foreground leading-[1.8] max-w-[600px] mb-16">
+      <p className="font-sans text-[14px] text-muted-foreground leading-[1.8] max-w-[600px] mb-8 md:mb-16">
         I designed and deployed the marketing intelligence infrastructure that connects every customer touchpoint into a centralized system — transforming fragmented signals into unified insights, and activating them across every channel in real time.
       </p>
 
-      <div ref={containerRef} className="relative w-full" style={{ height: 520 }}>
+      {/* Mobile: simplified stacked layout */}
+      <div className="md:hidden flex flex-col gap-6">
+        <div className="grid grid-cols-2 gap-2">
+          {sources.map((s, i) => (
+            <div key={i} className="flex items-center gap-2 p-3 rounded-lg" style={{ border: "1px solid hsl(var(--border))", background: "rgba(47,163,127,0.05)" }}>
+              <span className="text-[18px]">{s.icon}</span>
+              <span className="font-sans text-[10px] tracking-[0.08em] uppercase text-muted-foreground">{s.label}</span>
+            </div>
+          ))}
+        </div>
+        <div className="flex justify-center">
+          <svg width="24" height="32"><path d="M12 0 L12 24" stroke="hsl(160,55%,38%)" strokeWidth="2" strokeDasharray="4 4" /><polygon points="6,22 12,30 18,22" fill="hsl(160,55%,38%)" /></svg>
+        </div>
+        <div className="flex flex-col items-center gap-1 p-6 mx-auto" style={{ border: "1px solid hsl(var(--primary))", background: "hsl(var(--card))", borderRadius: 4 }}>
+          <div className="text-[28px]">⬡</div>
+          <div className="font-display text-[11px] font-bold tracking-[0.1em] uppercase text-primary">Centralized</div>
+          <div className="font-sans text-[9px] text-muted-foreground tracking-[0.08em]">Data · Intelligence</div>
+        </div>
+        <div className="flex justify-center">
+          <svg width="24" height="32"><path d="M12 0 L12 24" stroke="hsl(160,55%,38%)" strokeWidth="2" strokeDasharray="4 4" /><polygon points="6,22 12,30 18,22" fill="hsl(160,55%,38%)" /></svg>
+        </div>
+        <div className="flex flex-col gap-2">
+          {outputs.map((o, i) => (
+            <div key={i} className="flex items-center gap-2.5 p-3" style={{ background: "hsl(var(--secondary))", border: "1px solid hsl(var(--border))" }}>
+              <div className="animate-blink" style={{ width: 6, height: 6, borderRadius: "50%", background: o.color, flexShrink: 0 }} />
+              <span className="font-sans text-[11px] tracking-[0.08em] text-foreground">{o.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop: positioned layout with SVG wires */}
+      <div ref={containerRef} className="relative w-full hidden md:block" style={{ height: 520 }}>
         <svg ref={svgRef} className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid meet" />
 
         {/* Source nodes LEFT */}
@@ -378,15 +421,17 @@ const IntelligenceTab = () => {
           <div className="font-sans text-[9px] tracking-[0.12em] uppercase text-muted-foreground text-center max-w-[70px] leading-[1.4]">{sources[5].label}</div>
         </div>
 
-        {/* Center CDP */}
+        {/* Center CDP with pulse rings */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10" style={{
           opacity: visible ? 1 : 0,
           transition: "opacity 0.6s ease 0.5s",
         }}>
           <div className="relative">
-            <div className="absolute left-1/2 top-1/2 pointer-events-none">
-              <div className="absolute" style={{ width: 160, height: 160, border: "1px solid rgba(47,163,127,0.25)", borderRadius: "50%", animation: "pulsering 2.5s ease-in-out infinite", transform: "translate(-50%,-50%)" }} />
-              <div className="absolute" style={{ width: 195, height: 195, border: "1px solid rgba(47,163,127,0.25)", borderRadius: "50%", animation: "pulsering 2.5s ease-in-out infinite 0.8s", transform: "translate(-50%,-50%)" }} />
+            {/* Pulsing rings */}
+            <div className="absolute left-1/2 top-1/2 pointer-events-none" style={{ width: 0, height: 0 }}>
+              <div className="absolute" style={{ width: 160, height: 160, border: "1.5px solid rgba(47,163,127,0.3)", borderRadius: "50%", animation: "pulsering 2.5s ease-in-out infinite", transform: "translate(-50%,-50%)" }} />
+              <div className="absolute" style={{ width: 200, height: 200, border: "1px solid rgba(47,163,127,0.2)", borderRadius: "50%", animation: "pulsering 2.5s ease-in-out infinite 0.8s", transform: "translate(-50%,-50%)" }} />
+              <div className="absolute" style={{ width: 240, height: 240, border: "1px solid rgba(47,163,127,0.12)", borderRadius: "50%", animation: "pulsering 3s ease-in-out infinite 1.5s", transform: "translate(-50%,-50%)" }} />
             </div>
             <div
               className="flex flex-col items-center justify-center gap-1 relative cursor-pointer"
@@ -448,15 +493,15 @@ const SegmentationTab = () => {
   ];
 
   return (
-    <div style={{ padding: "120px 80px" }} className="bg-background">
+    <div className="px-6 py-[60px] md:px-20 bg-background">
       <SectionHeader num="03" title="RFM" em="Segmentation" />
-      <div className="max-w-[700px] mb-16">
+      <div className="max-w-[700px] mb-8 md:mb-16">
         <p className="font-sans text-[14px] text-muted-foreground leading-[1.8]">
           Precision marketing requires precision targeting. I designed the segmentation framework around three leading indicators of customer value and churn risk — moving the business from mass messaging to individualized, ROI-based activation.
         </p>
       </div>
 
-      <div className="grid grid-cols-[300px_1fr] mb-12" style={{ gap: "2px", background: "hsl(var(--border))" }}>
+      <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] mb-12" style={{ gap: "2px", background: "hsl(var(--border))" }}>
         <div className="flex flex-col" style={{ gap: "2px", background: "hsl(var(--border))" }}>
           {dims.map((d) => (
             <div key={d.letter} className="bg-card rounded" style={{ padding: "28px 24px", borderLeft: "3px solid hsl(var(--border))" }}>
@@ -479,7 +524,7 @@ const SegmentationTab = () => {
           <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground" style={{ padding: "24px 32px 16px", borderBottom: "1px solid hsl(var(--border))" }}>
             Customer Segments → Lifecycle Stages
           </div>
-          <div className="grid grid-cols-3 flex-1" style={{ gap: "1px", background: "hsl(var(--border))" }}>
+          <div className="grid grid-cols-2 md:grid-cols-3 flex-1" style={{ gap: "1px", background: "hsl(var(--border))" }}>
             {segments.map((s) => (
               <div key={s.name} className="bg-card hover:bg-secondary transition-colors cursor-pointer relative overflow-hidden group" style={{ padding: "24px 20px" }}>
                 <div className="absolute bottom-0 left-0 right-0 h-[3px] transform scale-x-0 origin-left transition-transform duration-400 group-hover:scale-x-100" style={{ background: s.color }} />
@@ -497,8 +542,8 @@ const SegmentationTab = () => {
       </div>
 
       <div
-        className="grid grid-cols-[1fr_auto_1fr] items-center gap-6 bg-card"
-        style={{ border: "1px solid hsl(var(--border))", borderTop: "2px solid hsl(var(--primary))", padding: 32, borderRadius: "0 0 8px 8px" }}
+        className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-6 bg-card"
+        style={{ border: "1px solid hsl(var(--border))", borderTop: "2px solid hsl(var(--primary))", padding: "24px", borderRadius: "0 0 8px 8px" }}
       >
         <div>
           <div className="font-mono text-[10px] tracking-[0.15em] uppercase text-muted-foreground mb-2">Segmentation Inputs</div>
@@ -538,17 +583,17 @@ const ActivationTab = () => {
   ];
 
   return (
-    <div style={{ padding: "120px 80px" }} className="bg-card">
+    <div className="px-6 py-[60px] md:px-20 bg-card">
       <SectionHeader num="04" title="Revenue" em="Activation" />
 
-      <h2 className="font-display font-extrabold leading-none tracking-[-0.025em] mb-4" style={{ fontSize: "clamp(36px, 4vw, 54px)" }}>
+      <h2 className="font-display font-extrabold leading-none tracking-[-0.025em] mb-4" style={{ fontSize: "clamp(28px, 4vw, 54px)" }}>
         When data moves, <em className="text-primary">revenue follows.</em>
       </h2>
       <p className="font-sans text-[14px] text-muted-foreground leading-[1.8] max-w-[600px] mb-12">
         Intelligence and segmentation are only as valuable as the system that acts on them. This layer connects unified customer profiles, behavioral signals, and workflow automation into a repeatable engine.
       </p>
 
-      <div className="grid grid-cols-3 gap-6 mb-12">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-12">
         {[
           { icon: "⬡", title: "Unified Data Layer", sub: "CDP · CRM · Signals", arrow: "segment & score" },
           { icon: "◈", title: "Orchestration Engine", sub: "Routing · Scoring · Timing", arrow: "activate & measure" },
@@ -603,7 +648,7 @@ const QxoStorySection = () => {
   return (
     <div>
       {/* QXO Story header */}
-      <div style={{ padding: "80px 80px 0" }} className="bg-background">
+      <div className="px-6 pt-[60px] md:px-20 md:pt-20 bg-background">
         <SectionHeader num="02" title="QXO" em="Story" />
         <p className="font-sans text-[14px] text-muted-foreground leading-[1.8] max-w-[700px] mb-8">
           Use the tabs to move through a four-part growth story — strategic overview, marketing intelligence, customer segmentation, and activation.
@@ -611,13 +656,13 @@ const QxoStorySection = () => {
       </div>
 
       {/* File-folder tab bar */}
-      <div className="sticky top-16 z-40 bg-background" style={{ padding: "0 80px" }}>
-        <div className="flex gap-0 items-end">
+      <div className="sticky top-14 md:top-16 z-40 bg-background px-4 md:px-20 overflow-x-auto">
+        <div className="flex gap-0 items-end min-w-max">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`relative px-6 py-3 text-[11px] font-sans tracking-[0.12em] uppercase transition-all cursor-pointer ${
+              className={`relative px-4 md:px-6 py-3 text-[10px] md:text-[11px] font-sans tracking-[0.12em] uppercase transition-all cursor-pointer whitespace-nowrap ${
                 activeTab === tab.id
                   ? "bg-card text-primary font-semibold z-10"
                   : "bg-secondary text-muted-foreground hover:text-foreground"

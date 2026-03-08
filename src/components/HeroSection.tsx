@@ -2,21 +2,20 @@ import chadHeadshot from "@/assets/chad-headshot.png";
 
 const stats = [
   { value: "$1.25B", label: "Digital Revenue Scaled" },
-  { value: "14+", label: "Years Experience" },
+  { value: "15+", label: "Years Experience" },
   { value: "30K", label: "Leads per Quarter" },
-  { value: "$500K", label: "Ecommerce Revenue" },
+  { value: "$250K", label: "Ecommerce Revenue" },
 ];
 
 const HeroSection = () => {
   return (
     <section
-      className="min-h-screen grid grid-cols-1 lg:grid-cols-2 relative overflow-hidden bg-background"
+      className="min-h-screen grid grid-cols-1 lg:grid-cols-2 relative overflow-hidden bg-background pt-16 md:pt-0"
       id="home"
     >
       {/* Left */}
       <div
-        className="flex flex-col justify-center relative z-[1] bg-background"
-        style={{ padding: "80px 60px 80px 80px" }}
+        className="flex flex-col justify-center relative z-[1] bg-background px-6 py-12 md:px-20 md:py-20"
       >
         {/* Greeting */}
         <div
@@ -64,7 +63,7 @@ const HeroSection = () => {
 
         {/* Scroll indicator */}
         <div
-          className="absolute bottom-10 left-[80px] flex items-center gap-3 text-[10px] tracking-[0.2em] uppercase text-muted-foreground animate-fadeIn-delay"
+          className="absolute bottom-10 left-6 md:left-[80px] hidden md:flex items-center gap-3 text-[10px] tracking-[0.2em] uppercase text-muted-foreground animate-fadeIn-delay"
         >
           <div className="w-[60px] h-[1px] bg-border relative overflow-hidden">
             <div
@@ -77,7 +76,7 @@ const HeroSection = () => {
       </div>
 
       {/* Right */}
-      <div className="relative flex items-center justify-center overflow-hidden bg-background">
+      <div className="relative flex items-center justify-center overflow-hidden bg-background min-h-[400px] lg:min-h-0">
         {/* Grid background */}
         <div
           className="absolute inset-0 animate-gridPan"
@@ -99,7 +98,7 @@ const HeroSection = () => {
 
         {/* Photo wrap */}
         <div className="relative z-[2] flex flex-col items-center" style={{ opacity: 0, animation: "fadeIn 1s ease 0.8s forwards" }}>
-          <div className="relative" style={{ width: 380, height: 460 }}>
+          <div className="relative w-[280px] h-[340px] md:w-[380px] md:h-[460px]">
             {/* Corner accent */}
             <div
               className="absolute z-[3] top-0 left-0"
