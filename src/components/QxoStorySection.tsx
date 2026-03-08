@@ -135,10 +135,10 @@ const StoryOverview = () => {
       {/* Desktop: positioned layout with SVG arrows */}
       <div ref={canvasRef} className="relative w-full hidden md:block" style={{ height: 680 }}>
         <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1200 680" preserveAspectRatio="xMidYMid meet">
-          {/* Arrow 1: starts right side of BUILD, curves right and down to above SCALE */}
+          {/* Arrow 1: right of D in BUILD → top of A in SCALE */}
           <path
             ref={arrow1Ref}
-            d="M 280 80 C 380 80 400 180 456 210"
+            d="M 240 65 C 340 65 380 140 500 195"
             fill="none"
             stroke="hsl(160, 55%, 38%)"
             strokeWidth="2.5"
@@ -148,14 +148,14 @@ const StoryOverview = () => {
             strokeDashoffset="1000"
           />
           <polygon
-            points="446,202 462,216 450,224"
+            points="492,188 508,198 496,206"
             fill="hsl(160, 55%, 38%)"
             style={{ opacity: phase >= 2 ? 1 : 0, transition: "opacity 0.3s ease" }}
           />
-          {/* Arrow 2: starts right side of SCALE, curves right and down to above IMPACT */}
+          {/* Arrow 2: right of E in SCALE → top of P in IMPACT */}
           <path
             ref={arrow2Ref}
-            d="M 710 260 C 810 260 830 350 876 380"
+            d="M 700 235 C 790 235 830 310 890 370"
             fill="none"
             stroke="hsl(160, 55%, 38%)"
             strokeWidth="2.5"
@@ -165,7 +165,7 @@ const StoryOverview = () => {
             strokeDashoffset="1000"
           />
           <polygon
-            points="866,372 882,386 870,394"
+            points="882,362 898,374 886,382"
             fill="hsl(160, 55%, 38%)"
             style={{ opacity: phase >= 4 ? 1 : 0, transition: "opacity 0.3s ease" }}
           />
