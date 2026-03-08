@@ -111,7 +111,7 @@ const TimelineSection = () => {
             <div
               className={`absolute w-[10px] h-[10px] rounded-full ${job.current ? "animate-dotPulse" : ""}`}
               style={{
-                left: -64,
+                left: -37,
                 top: 4,
                 background: job.current ? "hsl(var(--primary))" : "hsl(var(--primary))",
                 boxShadow: job.current
