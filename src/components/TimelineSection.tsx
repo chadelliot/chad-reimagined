@@ -95,10 +95,10 @@ const jobs = [
 
 const TimelineSection = () => {
   return (
-    <section style={{ padding: "120px 80px" }} className="bg-background">
+    <section className="bg-background px-6 py-[60px] md:px-20 md:py-[120px]">
       <SectionHeader num="04" title="Career" em="Timeline" />
 
-      <div className="relative" style={{ paddingLeft: 60 }}>
+      <div className="relative pl-8 md:pl-[60px]">
         {/* Vertical line */}
         <div
           className="absolute left-0 top-0 bottom-0 w-[1px]"
@@ -111,7 +111,7 @@ const TimelineSection = () => {
             <div
               className={`absolute w-[10px] h-[10px] rounded-full ${job.current ? "animate-dotPulse" : ""}`}
               style={{
-                left: -64,
+                left: -37,
                 top: 4,
                 background: job.current ? "hsl(var(--primary))" : "hsl(var(--primary))",
                 boxShadow: job.current
@@ -134,7 +134,7 @@ const TimelineSection = () => {
             </div>
 
             {/* Company & role */}
-            <div className="font-display text-[22px] font-extrabold tracking-[-0.02em] mb-1 flex items-baseline gap-3" style={{ color: "hsl(var(--charcoal))" }}>
+            <div className="font-display text-[18px] md:text-[22px] font-extrabold tracking-[-0.02em] mb-1 flex flex-wrap items-baseline gap-1 md:gap-3" style={{ color: "hsl(var(--charcoal))" }}>
               {job.company}
               {job.companyDescriptor && (
                 <span className="font-sans text-[11px] font-normal text-muted-foreground tracking-[0.05em] italic">
@@ -147,7 +147,7 @@ const TimelineSection = () => {
             </div>
 
             {/* Body grid */}
-            <div className="grid grid-cols-[1fr_280px] gap-10 items-start">
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-6 md:gap-10 items-start">
               <div>
                 <p className="font-sans text-[13px] leading-[1.8] mb-5" style={{ color: "hsl(var(--charcoal))" }}>
                   {job.description}

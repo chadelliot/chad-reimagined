@@ -10,12 +10,12 @@ const certifications = [
 
 const EducationSection = () => {
   return (
-    <section style={{ padding: "0 80px 60px" }} className="bg-background">
+    <section className="bg-background px-6 pb-[60px] md:px-20">
       <SectionHeader num="06" title="Education &" em="Credentials" />
 
       {/* Education cards */}
       <div
-        className="grid grid-cols-2 mb-16"
+        className="grid grid-cols-1 md:grid-cols-2 mb-16"
         style={{ gap: "1px", background: "hsl(var(--border))", border: "1px solid hsl(var(--border))" }}
       >
         {[
@@ -35,7 +35,7 @@ const EducationSection = () => {
 
       {/* Certifications */}
       <div
-        className="grid grid-cols-5"
+        className="grid grid-cols-2 md:grid-cols-5"
         style={{ gap: "1px", background: "hsl(var(--border))", border: "1px solid hsl(var(--border))" }}
       >
         {certifications.map((cert) => (

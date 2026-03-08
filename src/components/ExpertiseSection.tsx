@@ -11,11 +11,11 @@ const expertiseItems = [
 
 const ExpertiseSection = () => {
   return (
-    <section style={{ padding: "120px 80px" }} className="bg-background">
+    <section className="bg-background px-6 py-[60px] md:px-20 md:py-[120px]">
       <SectionHeader num="05" title="Core" em="Expertise" />
 
       <div
-        className="grid grid-cols-3 overflow-hidden rounded-lg"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 overflow-hidden rounded-lg"
         style={{ gap: "1px", background: "hsl(var(--border))", border: "1px solid hsl(var(--border))" }}
       >
         {expertiseItems.map((item) => (
