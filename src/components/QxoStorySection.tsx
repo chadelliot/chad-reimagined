@@ -320,7 +320,9 @@ const IntelligenceTab = () => {
 
   return (
     <div className="bg-card px-6 py-[60px] md:px-20">
-      <SectionHeader num="02" title="Integrated Marketing" em="Intelligence" />
+      <h2 className="font-display font-extrabold leading-none tracking-[-0.025em] mb-4" style={{ fontSize: "clamp(28px, 4vw, 54px)" }}>
+        Every signal tells a story — <em className="text-primary">if you're listening.</em>
+      </h2>
       <p className="font-sans text-[14px] text-muted-foreground leading-[1.8] max-w-[600px] mb-8 md:mb-16">
         I designed and deployed the marketing intelligence infrastructure that connects every customer touchpoint into a centralized system — transforming fragmented signals into unified insights, and activating them across every channel in real time.
       </p>
