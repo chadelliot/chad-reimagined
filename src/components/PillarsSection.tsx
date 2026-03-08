@@ -4,6 +4,7 @@ import gapLogo from "@/assets/gap-logo.svg";
 const pillars = [
   {
     num: "01",
+    tag: "Career",
     title: "Corporate",
     subtitle: "Growth",
     org: "QXO · Brad Jacobs Company",
