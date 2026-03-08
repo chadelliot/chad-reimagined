@@ -76,7 +76,7 @@ const HeroSection = () => {
       </div>
 
       {/* Right */}
-      <div className="relative flex items-center justify-center overflow-hidden bg-background">
+      <div className="relative flex items-center justify-center overflow-hidden bg-background min-h-[400px] lg:min-h-0">
         {/* Grid background */}
         <div
           className="absolute inset-0 animate-gridPan"
