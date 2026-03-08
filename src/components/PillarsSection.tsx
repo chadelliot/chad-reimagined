@@ -26,6 +26,7 @@ const pillars = [
     title: "Advisory",
     subtitle: "& AI Strategy",
     org: "Michaels · Gap",
+    logos: [michaelsLogo, gapLogo],
     description:
       "I advise select brands on customer lifetime value analysis, segmentation design, lifecycle strategy, and marketing operations modernization with an emphasis on AI-enabled activation.",
     bullets: [
