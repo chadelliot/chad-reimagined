@@ -401,23 +401,37 @@ const QxoStorySection = () => {
         </p>
       </div>
 
-      {/* Tab bar */}
-      <div className="sticky top-16 z-40 bg-background/95 backdrop-blur-sm" style={{ borderBottom: "1px solid hsl(var(--border))", padding: "16px 80px" }}>
-        <div className="flex gap-2">
+      {/* File-folder tab bar */}
+      <div className="sticky top-16 z-40 bg-background" style={{ padding: "0 80px" }}>
+        <div className="flex gap-0 items-end">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-5 py-2.5 rounded text-[11px] font-sans tracking-[0.12em] uppercase transition-all cursor-pointer ${
+              className={`relative px-6 py-3 text-[11px] font-sans tracking-[0.12em] uppercase transition-all cursor-pointer ${
                 activeTab === tab.id
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-card border border-border text-muted-foreground hover:text-foreground hover:border-primary"
+                  ? "bg-card text-primary font-semibold z-10"
+                  : "bg-secondary text-muted-foreground hover:text-foreground"
               }`}
+              style={{
+                borderTopLeftRadius: 8,
+                borderTopRightRadius: 8,
+                borderBottomLeftRadius: 0,
+                borderBottomRightRadius: 0,
+                border: activeTab === tab.id
+                  ? "1px solid hsl(var(--border))"
+                  : "1px solid hsl(var(--border))",
+                borderBottom: activeTab === tab.id
+                  ? "1px solid hsl(var(--card))"
+                  : "1px solid hsl(var(--border))",
+                marginBottom: -1,
+              }}
             >
               {tab.label}
             </button>
           ))}
         </div>
+        <div style={{ borderBottom: "1px solid hsl(var(--border))" }} />
       </div>
 
       {renderTab()}

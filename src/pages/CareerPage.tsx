@@ -6,7 +6,9 @@ const CareerPage = () => {
   return (
     <div className="min-h-screen bg-background pt-16">
       <Navbar />
-      <TimelineSection />
+      <div className="animate-fadeUp">
+        <TimelineSection />
+      </div>
       <Footer />
     </div>
   );
