@@ -5,7 +5,7 @@ const tabs = [
   { id: "overview", label: "Strategic Overview" },
   { id: "intelligence", label: "Marketing Intelligence" },
   { id: "segmentation", label: "Customer Segmentation" },
-  { id: "activation", label: "Activation" },
+  { id: "activation", label: "Revenue Activation" },
 ];
 
 /* ── STORY OVERVIEW (Visify style) ── */
