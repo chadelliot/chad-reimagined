@@ -4,7 +4,8 @@ const jobs = [
   {
     period: "2021 — Present",
     current: true,
-    company: "QXO · Brad Jacobs Company",
+    company: "QXO Building Products, Inc.",
+    companyDescriptor: "a Brad Jacobs Company",
     title: "Director – Digital Marketing & Marketing Operations · Herndon, VA",
     description: "Built QXO's entire digital marketing infrastructure from zero inside an $800B industry. Architected the funnel, CDP, segmentation engine, Growth Lab, and attribution system — then scaled it to $1.25B in digital revenue while influencing $2.5B in branch sales. Stood on the podium during the Beacon Building Products acquisition.",
     bullets: [
@@ -133,8 +134,13 @@ const TimelineSection = () => {
             </div>
 
             {/* Company & role */}
-            <div className="font-display text-[22px] font-extrabold tracking-[-0.02em] mb-1" style={{ color: "hsl(var(--charcoal))" }}>
+            <div className="font-display text-[22px] font-extrabold tracking-[-0.02em] mb-1 flex items-baseline gap-3" style={{ color: "hsl(var(--charcoal))" }}>
               {job.company}
+              {job.companyDescriptor && (
+                <span className="font-sans text-[11px] font-normal text-muted-foreground tracking-[0.05em] italic">
+                  {job.companyDescriptor}
+                </span>
+              )}
             </div>
             <div className="font-sans text-[11px] text-muted-foreground tracking-[0.12em] uppercase mb-6">
               {job.title}
@@ -158,21 +164,8 @@ const TimelineSection = () => {
 
               {/* Metrics */}
               <div className="flex flex-col gap-2.5">
-                <div
-                  className="flex flex-col overflow-hidden rounded"
-                  style={{ gap: "1px", background: "hsl(var(--border))", border: "1px solid hsl(var(--border))" }}
-                >
-                  {job.stats.map((s) => (
-                    <div key={s.label} className="bg-card hover:bg-secondary transition-colors flex justify-between items-center gap-3" style={{ padding: "14px 18px" }}>
-                      <span className="font-sans text-[10px] text-muted-foreground tracking-[0.1em] uppercase flex-1">{s.label}</span>
-                      <span className="font-display text-[16px] font-bold text-primary text-right whitespace-nowrap">{s.value}</span>
-                    </div>
-                  ))}
-                </div>
-
                 {job.featured && (
                   <div className="relative">
-                    {/* Star badge pinned to top-right corner */}
                     <span
                       className="absolute flex items-center justify-center w-[26px] h-[26px] rounded-full bg-primary text-primary-foreground text-[13px] font-bold z-10"
                       style={{ top: -10, right: -10, boxShadow: "0 2px 8px hsl(var(--primary) / 0.4)" }}
@@ -198,6 +191,17 @@ const TimelineSection = () => {
                     </a>
                   </div>
                 )}
+                <div
+                  className="flex flex-col overflow-hidden rounded"
+                  style={{ gap: "1px", background: "hsl(var(--border))", border: "1px solid hsl(var(--border))" }}
+                >
+                  {job.stats.map((s) => (
+                    <div key={s.label} className="bg-card hover:bg-secondary transition-colors flex justify-between items-center gap-3" style={{ padding: "14px 18px" }}>
+                      <span className="font-sans text-[10px] text-muted-foreground tracking-[0.1em] uppercase flex-1">{s.label}</span>
+                      <span className="font-display text-[16px] font-bold text-primary text-right whitespace-nowrap">{s.value}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
