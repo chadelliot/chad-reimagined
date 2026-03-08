@@ -10,6 +10,7 @@ import SkillsPage from "./pages/SkillsPage";
 import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
 import ContactSlideout from "./components/ContactSlideout";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -19,6 +20,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <ContactSlideout />
         <Routes>
           <Route path="/" element={<Index />} />
