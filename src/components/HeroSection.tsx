@@ -10,7 +10,7 @@ const stats = [
 const HeroSection = () => {
   return (
     <section
-      className="min-h-screen grid grid-cols-1 lg:grid-cols-2 relative overflow-hidden bg-background"
+      className="min-h-screen grid grid-cols-1 lg:grid-cols-2 relative overflow-hidden bg-background pt-16 md:pt-0"
       id="home"
     >
       {/* Left */}
