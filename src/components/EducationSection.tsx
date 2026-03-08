@@ -15,7 +15,7 @@ const EducationSection = () => {
 
       {/* Education cards */}
       <div
-        className="grid grid-cols-2 mb-16"
+        className="grid grid-cols-1 md:grid-cols-2 mb-16"
         style={{ gap: "1px", background: "hsl(var(--border))", border: "1px solid hsl(var(--border))" }}
       >
         {[
