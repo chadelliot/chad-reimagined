@@ -97,6 +97,14 @@ const jobs = [
 ];
 
 const TimelineSection = () => {
+  const [videoOpen, setVideoOpen] = useState(false);
+  const [videoUrl, setVideoUrl] = useState("");
+
+  const openVideo = (href: string) => {
+    setVideoUrl(href);
+    setVideoOpen(true);
+  };
+
   return (
     <section className="bg-background px-6 py-[60px] md:px-20 md:py-[120px]">
       <SectionHeader num="04" title="Career" em="Timeline" />
@@ -116,7 +124,7 @@ const TimelineSection = () => {
               style={{
                 left: -37,
                 top: 4,
-                background: job.current ? "hsl(var(--primary))" : "hsl(var(--primary))",
+                background: "hsl(var(--primary))",
                 boxShadow: job.current
                   ? "0 0 0 4px rgba(94,209,174,0.15), 0 0 20px rgba(94,209,174,0.4)"
                   : "0 0 0 4px rgba(47,163,127,0.15), 0 0 16px rgba(47,163,127,0.3)",
@@ -175,11 +183,9 @@ const TimelineSection = () => {
                     >
                       ★
                     </span>
-                    <a
-                      href={job.featured.href}
-                      target="_blank"
-                      rel="noopener"
-                      className="flex items-center justify-between gap-3 rounded border border-primary/30 bg-card hover:bg-secondary transition-colors"
+                    <button
+                      onClick={() => openVideo(job.featured!.href)}
+                      className="flex items-center justify-between gap-3 rounded border border-primary/30 bg-card hover:bg-secondary transition-colors cursor-pointer w-full text-left"
                       style={{ padding: "14px 18px" }}
                     >
                       <span className="flex items-center gap-2.5">
@@ -191,7 +197,7 @@ const TimelineSection = () => {
                       <span className="font-mono text-[10px] text-primary tracking-[0.1em] uppercase font-semibold">
                         {job.featured.cta}
                       </span>
-                    </a>
+                    </button>
                   </div>
                 )}
                 <div
@@ -210,6 +216,26 @@ const TimelineSection = () => {
           </div>
         ))}
       </div>
+
+      {/* Video lightbox */}
+      <Dialog open={videoOpen} onOpenChange={setVideoOpen}>
+        <DialogContent className="max-w-[900px] w-[95vw] p-0 bg-black border-none rounded-lg overflow-hidden">
+          <VisuallyHidden>
+            <DialogTitle>NYSE Ceremony Video</DialogTitle>
+          </VisuallyHidden>
+          <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+            {videoOpen && (
+              <iframe
+                src={videoUrl}
+                className="absolute inset-0 w-full h-full"
+                allow="autoplay; fullscreen"
+                allowFullScreen
+                title="NYSE Ceremony"
+              />
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };
