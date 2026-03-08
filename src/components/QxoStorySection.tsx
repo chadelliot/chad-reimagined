@@ -420,19 +420,6 @@ const ActivationTab = () => {
         ))}
       </div>
 
-      {/* Bottom stats */}
-      <div className="grid grid-cols-3 mt-12" style={{ gap: "1px", background: "hsl(var(--border))", border: "1px solid hsl(var(--border))", borderRadius: 8, overflow: "hidden" }}>
-        {[
-          { label: "Revenue influenced", value: "$1.25B" },
-          { label: "Layers connected", value: "6 operating" },
-          { label: "Activation model", value: "Always-on lifecycle" },
-        ].map((s) => (
-          <div key={s.label} className="bg-card text-center" style={{ padding: "48px 32px" }}>
-            <div className="font-sans text-[11px] text-muted-foreground tracking-[0.15em] uppercase mb-2">{s.label}</div>
-            <div className="font-display text-[52px] font-extrabold text-primary leading-none tracking-[-0.03em] italic">{s.value}</div>
-          </div>
-        ))}
-      </div>
     </div>
   );
 };
