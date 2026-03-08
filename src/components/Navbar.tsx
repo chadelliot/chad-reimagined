@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 
 const navItems = [
   { label: "About", href: "/" },
@@ -9,22 +11,24 @@ const navItems = [
 
 const Navbar = () => {
   const location = useLocation();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-[100] flex justify-between items-center"
+      className="fixed top-0 left-0 right-0 z-[100] flex justify-between items-center px-6 md:px-20 py-4 md:py-6"
       style={{
-        padding: "24px 80px",
         background: "rgba(248,249,250,0.96)",
         backdropFilter: "blur(12px)",
         borderBottom: "1px solid hsl(var(--border))",
       }}
     >
       <div className="flex items-center">
-        <Link to="/" className="font-display text-[28px] font-extrabold tracking-tight text-foreground no-underline">
+        <Link to="/" className="font-display text-[22px] md:text-[28px] font-extrabold tracking-tight text-foreground no-underline">
           Chad <em className="text-primary">Parker</em>
         </Link>
       </div>
+
+      {/* Desktop nav */}
       <ul className="hidden md:flex gap-8 list-none">
         {navItems.map((item) => (
           <li key={item.label}>
@@ -41,6 +45,43 @@ const Navbar = () => {
           </li>
         ))}
       </ul>
+
+      {/* Mobile hamburger */}
+      <button
+        className="md:hidden flex items-center justify-center w-10 h-10 text-foreground cursor-pointer bg-transparent border-none"
+        onClick={() => setMobileOpen(!mobileOpen)}
+        aria-label="Toggle menu"
+      >
+        {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+      </button>
+
+      {/* Mobile menu */}
+      {mobileOpen && (
+        <div
+          className="absolute top-full left-0 right-0 md:hidden flex flex-col py-4 px-6 gap-1"
+          style={{
+            background: "rgba(248,249,250,0.98)",
+            backdropFilter: "blur(12px)",
+            borderBottom: "1px solid hsl(var(--border))",
+          }}
+        >
+          {navItems.map((item) => (
+            <Link
+              key={item.label}
+              to={item.href}
+              onClick={() => setMobileOpen(false)}
+              className={`no-underline text-[12px] font-medium tracking-[0.12em] uppercase py-3 px-2 transition-colors ${
+                location.pathname === item.href
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-primary"
+              }`}
+              style={{ borderBottom: "1px solid hsl(var(--border))" }}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      )}
     </nav>
   );
 };

@@ -61,11 +61,11 @@ const pillars = [
 ];
 
 const SectionHeader = ({ num, title, em }: { num: string; title: string; em: string }) => (
-  <div className="flex items-center gap-5 mb-16">
+  <div className="flex items-center gap-3 md:gap-5 mb-8 md:mb-16">
     <span className="font-mono text-[11px] text-primary tracking-[0.1em]">{num}</span>
     <h2
       className="font-display font-extrabold leading-none tracking-[-0.025em]"
-      style={{ fontSize: "clamp(36px, 4vw, 54px)" }}
+      style={{ fontSize: "clamp(28px, 4vw, 54px)" }}
     >
       {title} <em className="text-primary">{em}</em>
     </h2>

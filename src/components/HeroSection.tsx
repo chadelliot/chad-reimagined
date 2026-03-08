@@ -98,7 +98,7 @@ const HeroSection = () => {
 
         {/* Photo wrap */}
         <div className="relative z-[2] flex flex-col items-center" style={{ opacity: 0, animation: "fadeIn 1s ease 0.8s forwards" }}>
-          <div className="relative" style={{ width: 380, height: 460 }}>
+          <div className="relative w-[280px] h-[340px] md:w-[380px] md:h-[460px]">
             {/* Corner accent */}
             <div
               className="absolute z-[3] top-0 left-0"
