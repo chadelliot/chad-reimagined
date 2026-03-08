@@ -96,10 +96,10 @@ const StoryOverview = () => {
       backgroundImage: "linear-gradient(rgba(47,163,127,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(47,163,127,0.045) 1px, transparent 1px)",
       backgroundSize: "56px 56px",
     }}>
-      <SectionHeader num="01" title="My" em="Contribution" />
+      <SectionHeader num="01" title="A Scalable" em="Approach" />
       <div className="max-w-[600px] mb-5">
         <p className="font-sans text-[14px] text-muted-foreground leading-[1.8]">
-          How do you drive $1B+ in digital revenue inside an $800B industry that had almost no digital playbook? As the architect of the digital marketing system, I built the infrastructure, scaled the engine, and delivered measurable impact — three chapters, three years, one relentless approach to growth.
+          I've refined a repeatable playbook for standing up full-scale marketing infrastructure from scratch — data collection, signal architecture, segmentation, and activation — in 12 to 24 months. I know exactly what teams, technology, and processes are needed to build this anywhere, and I've got the process down to a sweet science.
         </p>
       </div>
 
