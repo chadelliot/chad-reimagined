@@ -95,10 +95,10 @@ const jobs = [
 
 const TimelineSection = () => {
   return (
-    <section style={{ padding: "120px 80px" }} className="bg-background">
+    <section className="bg-background px-6 py-[60px] md:px-20 md:py-[120px]">
       <SectionHeader num="04" title="Career" em="Timeline" />
 
-      <div className="relative" style={{ paddingLeft: 60 }}>
+      <div className="relative pl-8 md:pl-[60px]">
         {/* Vertical line */}
         <div
           className="absolute left-0 top-0 bottom-0 w-[1px]"
