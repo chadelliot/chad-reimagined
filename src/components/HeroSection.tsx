@@ -15,8 +15,7 @@ const HeroSection = () => {
     >
       {/* Left */}
       <div
-        className="flex flex-col justify-center relative z-[1] bg-background"
-        style={{ padding: "80px 60px 80px 80px" }}
+        className="flex flex-col justify-center relative z-[1] bg-background px-6 py-12 md:px-20 md:py-20"
       >
         {/* Greeting */}
         <div
