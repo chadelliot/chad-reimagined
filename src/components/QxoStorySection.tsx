@@ -138,7 +138,7 @@ const StoryOverview = () => {
           {/* Arrow 1: right of D in BUILD → top of A in SCALE */}
           <path
             ref={arrow1Ref}
-            d="M 240 65 C 340 65 380 140 500 195"
+            d="M 240 65 C 280 -40 460 -20 500 195"
             fill="none"
             stroke="hsl(160, 55%, 38%)"
             strokeWidth="2.5"
@@ -155,7 +155,7 @@ const StoryOverview = () => {
           {/* Arrow 2: right of E in SCALE → top of P in IMPACT */}
           <path
             ref={arrow2Ref}
-            d="M 700 235 C 790 235 830 310 890 370"
+            d="M 700 235 C 740 120 850 140 890 370"
             fill="none"
             stroke="hsl(160, 55%, 38%)"
             strokeWidth="2.5"
