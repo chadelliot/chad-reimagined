@@ -651,7 +651,7 @@ const QxoStorySection = () => {
       <div className="px-6 pt-[60px] md:px-20 md:pt-20 bg-background">
         <SectionHeader num="02" title="Strategy in" em="Action" />
         <p className="font-sans text-[14px] text-muted-foreground leading-[1.8] max-w-[700px] mb-8">
-          Use the tabs to move through a four-part growth story — strategic overview, marketing intelligence, customer segmentation, and activation.
+          I build marketing systems that move from raw data to revenue. It starts with collection and cleaning — unifying signals across platforms into a single source of truth. From there, I orchestrate processes, build segmentation frameworks, and design activation paths that turn behavioral intelligence into measurable pipeline.
         </p>
       </div>
 
