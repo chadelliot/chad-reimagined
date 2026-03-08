@@ -496,7 +496,9 @@ const SegmentationTab = () => {
 
   return (
     <div className="px-6 py-[60px] md:px-20 bg-card">
-      <SectionHeader num="03" title="RFM" em="Segmentation" />
+      <h2 className="font-display font-extrabold leading-none tracking-[-0.025em] mb-4" style={{ fontSize: "clamp(28px, 4vw, 54px)" }}>
+        Know your customer — <em className="text-primary">before they leave.</em>
+      </h2>
       <div className="max-w-[700px] mb-8 md:mb-16">
         <p className="font-sans text-[14px] text-muted-foreground leading-[1.8]">
           Precision marketing requires precision targeting. I designed the segmentation framework around three leading indicators of customer value and churn risk — moving the business from mass messaging to individualized, ROI-based activation.
