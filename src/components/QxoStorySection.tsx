@@ -393,6 +393,9 @@ const QxoStorySection = () => {
 
   return (
     <div>
+      {/* QXO Story hero — always visible */}
+      <QxoStoryHero />
+
       {/* Tab bar */}
       <div className="sticky top-16 z-40 bg-background/95 backdrop-blur-sm" style={{ borderBottom: "1px solid hsl(var(--border))", padding: "16px 80px" }}>
         <div className="flex gap-2">
