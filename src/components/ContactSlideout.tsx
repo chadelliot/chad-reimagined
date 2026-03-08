@@ -72,7 +72,7 @@ const ContactSlideout = () => {
       <Sheet open={open} onOpenChange={(v) => { setOpen(v); if (v) resetForm(); }}>
         <SheetTrigger asChild>
           <button
-            className="fixed right-0 top-1/2 -translate-y-1/2 z-[90] flex items-center gap-1.5 px-3 py-4 rounded-l-lg border border-r-0 border-primary/40 bg-primary text-primary-foreground font-sans text-[11px] tracking-[0.1em] uppercase font-medium cursor-pointer shadow-lg hover:shadow-xl transition-shadow"
+            className="fixed right-0 top-1/2 -translate-y-1/2 z-[200] hidden md:flex items-center gap-1.5 px-3 py-4 rounded-l-lg border border-r-0 border-primary/40 bg-primary text-primary-foreground font-sans text-[11px] tracking-[0.1em] uppercase font-medium cursor-pointer shadow-lg hover:shadow-xl transition-shadow"
             style={{ writingMode: "vertical-rl", textOrientation: "mixed" }}
           >
             <Mail size={14} />
@@ -80,7 +80,7 @@ const ContactSlideout = () => {
           </button>
         </SheetTrigger>
 
-        <SheetContent side="right" className="w-full sm:w-[440px] p-0 border-l border-border bg-background overflow-y-auto">
+        <SheetContent side="right" className="w-full sm:w-[440px] p-0 border-l border-border bg-background overflow-y-auto z-[201]">
           <div className="px-6 md:px-8 py-8">
             {/* Header */}
             <div className="mb-8">
