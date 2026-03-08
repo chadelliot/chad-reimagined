@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { SectionHeader } from "./PillarsSection";
 
 const tabs = [
@@ -8,128 +8,304 @@ const tabs = [
   { id: "activation", label: "Revenue Activation" },
 ];
 
-/* ── STORY OVERVIEW (Visify style) ── */
-const StoryOverview = () => (
-  <div className="bg-card" style={{
-    padding: "120px 80px 0",
-    backgroundImage: "linear-gradient(rgba(47,163,127,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(47,163,127,0.045) 1px, transparent 1px)",
-    backgroundSize: "56px 56px",
-  }}>
-    <SectionHeader num="01" title="My" em="Contribution" />
-    <div className="max-w-[600px] mb-5">
-      <p className="font-sans text-[14px] text-muted-foreground leading-[1.8]">
-        How do you drive $1B+ in digital revenue inside an $800B industry that had almost no digital playbook? As the architect of the digital marketing system, I built the infrastructure, scaled the engine, and delivered measurable impact — three chapters, three years, one relentless approach to growth.
-      </p>
-    </div>
+/* ── STORY OVERVIEW with scroll-triggered sequential animation ── */
+const StoryOverview = () => {
+  const canvasRef = useRef<HTMLDivElement>(null);
+  const [phase, setPhase] = useState(0); // 0=hidden, 1=node1, 2=arrow1, 3=node2, 4=arrow2, 5=node3
+  const hasTriggered = useRef(false);
 
-    {/* Story canvas */}
-    <div className="relative w-full" style={{ height: 680 }}>
-      {/* SVG hand-drawn arrows */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1200 680" preserveAspectRatio="xMidYMid meet">
-        {/* Arrow: BUILD → SCALE */}
-        <path
-          d="M 240 140 C 320 160, 380 180, 420 210 Q 440 225, 456 240"
-          fill="none"
-          stroke="hsl(160, 55%, 38%)"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeDasharray="8 6"
-          style={{ animation: "flowDash 3s linear infinite" }}
-        />
-        <polygon
-          points="450,248 462,238 456,252"
-          fill="hsl(160, 55%, 38%)"
-        />
-        {/* Arrow: SCALE → IMPACT */}
-        <path
-          d="M 700 340 C 740 360, 780 370, 800 385 Q 820 400, 816 410"
-          fill="none"
-          stroke="hsl(160, 55%, 38%)"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeDasharray="8 6"
-          style={{ animation: "flowDash 3s linear infinite" }}
-        />
-        <polygon
-          points="810,418 822,408 816,422"
-          fill="hsl(160, 55%, 38%)"
-        />
-      </svg>
-      {[
-        {
-          label: "BUILD.",
-          sub: "Architect from zero.",
-          detail: "[marketing funnel · tracking ecosystem\nMarTech stack · CDP deployment]",
-          chips: ["Funnel Tracking", "CDP", "Attribution"],
-          btn: "2021 — Foundation",
-          pos: { top: 30, left: 0, width: 280 },
-        },
-        {
-          label: "SCALE.",
-          sub: "Turn data into revenue.",
-          detail: "[30K leads/qtr · 10K qualified\n1,500 new customers per quarter]",
-          chips: ["30K Leads/Qtr", "AI Segmentation", "Growth Lab"],
-          btn: "2022–23 — Acceleration",
-          pos: { top: 200, left: "38%", width: 300 },
-        },
-        {
-          label: "IMPACT.",
-          sub: "$750M → $1.25B digital revenue.",
-          detail: "[influencing $2.5B in branch sales\nNYSE · Beacon Building acquisition]",
-          chips: ["$1.25B Revenue", "$2.5B Influenced", "NYSE Floor"],
-          btn: "2024 — Transformation",
-          pos: { top: 380, left: "68%", width: 320 },
-        },
-      ].map((node, i) => (
-        <div
-          key={i}
-          className="absolute"
-          style={{ top: node.pos.top, left: node.pos.left, width: node.pos.width }}
-        >
-          <div className="font-hand text-[52px] font-bold text-foreground leading-none mb-1.5 underline decoration-primary underline-offset-4">
-            {node.label}
-          </div>
-          <div className="font-sans text-[13px] text-foreground mb-1.5">{node.sub}</div>
-          <div className="font-mono text-[11px] text-muted-foreground italic leading-[1.5] whitespace-pre-line">{node.detail}</div>
-          <div className="flex flex-wrap gap-1.5 mt-3">
-            {node.chips.map((c) => (
-              <span
-                key={c}
-                className="text-[10px] tracking-[0.1em] text-primary px-2.5 py-1 rounded"
-                style={{ background: "rgba(47,163,127,0.1)", border: "1px solid hsl(var(--primary-deep))" }}
-              >
-                {c}
-              </span>
-            ))}
-          </div>
-          <button
-            className="mt-4 inline-flex items-center gap-2 text-[11px] font-sans tracking-[0.12em] uppercase text-primary border border-primary/50 px-[18px] py-[10px] rounded bg-primary/[0.06] hover:bg-primary/[0.14] hover:border-primary transition-all cursor-pointer"
+  useEffect(() => {
+    const el = canvasRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasTriggered.current) {
+          hasTriggered.current = true;
+          // Sequential: node1 → arrow1 → node2 → arrow2 → node3
+          setPhase(1);
+          setTimeout(() => setPhase(2), 600);
+          setTimeout(() => setPhase(3), 1500);
+          setTimeout(() => setPhase(4), 2100);
+          setTimeout(() => setPhase(5), 3000);
+        }
+      },
+      { threshold: 0.15 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  const arrow1Ref = useRef<SVGPathElement>(null);
+  const arrow2Ref = useRef<SVGPathElement>(null);
+
+  // Draw arrows via stroke-dashoffset
+  useEffect(() => {
+    if (phase >= 2 && arrow1Ref.current) {
+      const p = arrow1Ref.current;
+      const len = p.getTotalLength();
+      p.style.strokeDasharray = `${len}`;
+      p.style.strokeDashoffset = `${len}`;
+      // force reflow
+      p.getBoundingClientRect();
+      p.style.transition = "stroke-dashoffset 0.85s cubic-bezier(0.4,0,0.2,1)";
+      p.style.strokeDashoffset = "0";
+    }
+  }, [phase]);
+
+  useEffect(() => {
+    if (phase >= 4 && arrow2Ref.current) {
+      const p = arrow2Ref.current;
+      const len = p.getTotalLength();
+      p.style.strokeDasharray = `${len}`;
+      p.style.strokeDashoffset = `${len}`;
+      p.getBoundingClientRect();
+      p.style.transition = "stroke-dashoffset 0.85s cubic-bezier(0.4,0,0.2,1)";
+      p.style.strokeDashoffset = "0";
+    }
+  }, [phase]);
+
+  const nodes = [
+    {
+      label: "BUILD.",
+      sub: "Architect from zero.",
+      detail: "[marketing funnel · tracking ecosystem\nMarTech stack · CDP deployment]",
+      chips: ["Funnel Tracking", "CDP", "Attribution"],
+      btn: "2021 — Foundation",
+      pos: { top: 30, left: "0", width: 280 },
+      showAt: 1,
+    },
+    {
+      label: "SCALE.",
+      sub: "Turn data into revenue.",
+      detail: "[30K leads/qtr · 10K qualified\n1,500 new customers per quarter]",
+      chips: ["30K Leads/Qtr", "AI Segmentation", "Growth Lab"],
+      btn: "2022–23 — Acceleration",
+      pos: { top: 200, left: "38%", width: 300 },
+      showAt: 3,
+    },
+    {
+      label: "IMPACT.",
+      sub: "$750M → $1.25B digital revenue.",
+      detail: "[influencing $2.5B in branch sales\nNYSE · Beacon Building acquisition]",
+      chips: ["$1.25B Revenue", "$2.5B Influenced", "NYSE Floor"],
+      btn: "2024 — Transformation",
+      pos: { top: 380, left: "68%", width: 320 },
+      showAt: 5,
+    },
+  ];
+
+  return (
+    <div className="bg-card" style={{
+      padding: "120px 80px 0",
+      backgroundImage: "linear-gradient(rgba(47,163,127,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(47,163,127,0.045) 1px, transparent 1px)",
+      backgroundSize: "56px 56px",
+    }}>
+      <SectionHeader num="01" title="My" em="Contribution" />
+      <div className="max-w-[600px] mb-5">
+        <p className="font-sans text-[14px] text-muted-foreground leading-[1.8]">
+          How do you drive $1B+ in digital revenue inside an $800B industry that had almost no digital playbook? As the architect of the digital marketing system, I built the infrastructure, scaled the engine, and delivered measurable impact — three chapters, three years, one relentless approach to growth.
+        </p>
+      </div>
+
+      <div ref={canvasRef} className="relative w-full" style={{ height: 680 }}>
+        {/* SVG hand-drawn arrows */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1200 680" preserveAspectRatio="xMidYMid meet">
+          {/* Arrow 1: BUILD → SCALE */}
+          <path
+            ref={arrow1Ref}
+            d="M 200 220 C 240 320 370 320 460 278"
+            fill="none"
+            stroke="hsl(160, 55%, 38%)"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeDasharray="1000"
+            strokeDashoffset="1000"
+          />
+          <polygon
+            points="450,268 468,280 456,292"
+            fill="hsl(160, 55%, 38%)"
+            style={{ opacity: phase >= 2 ? 1 : 0, transition: "opacity 0.3s ease" }}
+          />
+          {/* Arrow 2: SCALE → IMPACT */}
+          <path
+            ref={arrow2Ref}
+            d="M 620 420 C 680 510 790 500 880 458"
+            fill="none"
+            stroke="hsl(160, 55%, 38%)"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeDasharray="1000"
+            strokeDashoffset="1000"
+          />
+          <polygon
+            points="870,448 888,458 872,470"
+            fill="hsl(160, 55%, 38%)"
+            style={{ opacity: phase >= 4 ? 1 : 0, transition: "opacity 0.3s ease" }}
+          />
+        </svg>
+
+        {nodes.map((node, i) => (
+          <div
+            key={i}
+            className="absolute"
+            style={{
+              top: node.pos.top,
+              left: node.pos.left,
+              width: node.pos.width,
+              opacity: phase >= node.showAt ? 1 : 0,
+              transform: phase >= node.showAt ? "translateY(0)" : "translateY(16px)",
+              transition: "opacity 0.7s ease, transform 0.7s ease",
+            }}
           >
-            {node.btn}
-          </button>
-        </div>
-      ))}
+            <div className="font-hand text-[52px] font-bold text-foreground leading-none mb-1.5 underline decoration-primary underline-offset-4">
+              {node.label}
+            </div>
+            <div className="font-sans text-[13px] text-foreground mb-1.5">{node.sub}</div>
+            <div className="font-mono text-[11px] text-muted-foreground italic leading-[1.5] whitespace-pre-line">{node.detail}</div>
+            <div className="flex flex-wrap gap-1.5 mt-3">
+              {node.chips.map((c) => (
+                <span
+                  key={c}
+                  className="text-[10px] tracking-[0.1em] text-primary px-2.5 py-1 rounded"
+                  style={{ background: "rgba(47,163,127,0.1)", border: "1px solid hsl(var(--primary-deep))" }}
+                >
+                  {c}
+                </span>
+              ))}
+            </div>
+            <button className="mt-4 inline-flex items-center gap-2 text-[11px] font-sans tracking-[0.12em] uppercase text-primary border border-primary/50 px-[18px] py-[10px] rounded bg-primary/[0.06] hover:bg-primary/[0.14] hover:border-primary transition-all cursor-pointer">
+              {node.btn}
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
-/* ── MARKETING INTELLIGENCE (0.xyz style) ── */
+/* ── MARKETING INTELLIGENCE with curved bezier lines ── */
 const IntelligenceTab = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const [visible, setVisible] = useState(false);
+  const hasTriggered = useRef(false);
+
   const sources = [
-    { icon: "🗂️", label: "CRM System" },
-    { icon: "🌐", label: "Web Signals" },
-    { icon: "🏪", label: "Store Level Data" },
-    { icon: "📧", label: "Marketing Automation" },
-    { icon: "📱", label: "Mobile App" },
-    { icon: "🔗", label: "Partner APIs" },
+    { icon: "🗂️", label: "CRM System", id: "src-crm" },
+    { icon: "🌐", label: "Web Signals", id: "src-web" },
+    { icon: "🏪", label: "Store Level Data", id: "src-pos" },
+    { icon: "📧", label: "Marketing Automation", id: "src-email" },
+    { icon: "📱", label: "Mobile App", id: "src-mobile" },
+    { icon: "🔗", label: "Partner APIs", id: "src-partner" },
   ];
   const outputs = [
-    { label: "AI Segmentation", color: "hsl(var(--primary))" },
-    { label: "Campaign Activation", color: "hsl(var(--accent))" },
-    { label: "Loyalty Programs", color: "hsl(var(--primary))" },
-    { label: "Revenue Attribution", color: "hsl(var(--primary))" },
-    { label: "Next-Best-Action", color: "#f4a261" },
+    { label: "AI Segmentation", color: "hsl(var(--primary))", id: "out-seg" },
+    { label: "Campaign Activation", color: "hsl(var(--accent))", id: "out-camp" },
+    { label: "Loyalty Programs", color: "hsl(var(--primary))", id: "out-loy" },
+    { label: "Revenue Attribution", color: "hsl(var(--primary))", id: "out-attr" },
+    { label: "Next-Best-Action", color: "#f4a261", id: "out-nba" },
   ];
+
+  const buildWires = useCallback(() => {
+    const container = containerRef.current;
+    const svg = svgRef.current;
+    if (!container || !svg) return;
+
+    const cRect = container.getBoundingClientRect();
+    const cx = container.offsetWidth / 2;
+    const cy = container.offsetHeight / 2;
+
+    const elCenter = (id: string) => {
+      const el = document.getElementById(id);
+      if (!el) return { x: 0, y: 0 };
+      const r = el.getBoundingClientRect();
+      return { x: r.left - cRect.left + r.width / 2, y: r.top - cRect.top + r.height / 2 };
+    };
+
+    // Scale to viewBox
+    const vbW = 1200;
+    const vbH = 520;
+    const scaleX = vbW / container.offsetWidth;
+    const scaleY = vbH / container.offsetHeight;
+    const toVB = (pt: { x: number; y: number }) => ({ x: pt.x * scaleX, y: pt.y * scaleY });
+
+    svg.innerHTML = "";
+
+    // Input: curved bezier from source → center
+    sources.forEach((s, i) => {
+      const sp = toVB(elCenter(s.id));
+      const cp = toVB({ x: cx, y: cy });
+      const mx = (sp.x + cp.x) / 2;
+      const d = `M ${sp.x} ${sp.y} C ${mx} ${sp.y} ${mx} ${cp.y} ${cp.x} ${cp.y}`;
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("d", d);
+      path.setAttribute("fill", "none");
+      path.setAttribute("stroke", "hsl(160, 55%, 38%)");
+      path.setAttribute("stroke-width", "1");
+      path.setAttribute("stroke-dasharray", "4 6");
+      path.setAttribute("opacity", "0");
+      path.style.transition = `opacity 0.4s ease ${0.1 + i * 0.12}s`;
+      path.classList.add("orch-input-path");
+      svg.appendChild(path);
+    });
+
+    // Output: curved bezier from center → output
+    outputs.forEach((o, i) => {
+      const op = toVB(elCenter(o.id));
+      const cp = toVB({ x: cx, y: cy });
+      const mx = (cp.x + op.x) / 2;
+      const d = `M ${cp.x} ${cp.y} C ${mx} ${cp.y} ${mx} ${op.y} ${op.x} ${op.y}`;
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("d", d);
+      path.setAttribute("fill", "none");
+      path.setAttribute("stroke", "hsl(160, 55%, 38%)");
+      path.setAttribute("stroke-width", "1.5");
+      path.setAttribute("opacity", "0");
+      path.style.strokeDasharray = "400";
+      path.style.strokeDashoffset = "400";
+      path.style.transition = `stroke-dashoffset 0.8s ease ${0.8 + i * 0.15}s, opacity 0.1s ease ${0.8 + i * 0.15}s`;
+      path.classList.add("orch-output-path");
+      svg.appendChild(path);
+    });
+  }, []);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasTriggered.current) {
+          hasTriggered.current = true;
+          // Build wires after a tick so elements are positioned
+          requestAnimationFrame(() => {
+            buildWires();
+            setVisible(true);
+
+            // Animate input paths
+            setTimeout(() => {
+              document.querySelectorAll(".orch-input-path").forEach((p) => {
+                (p as SVGElement).style.opacity = "0.6";
+                (p as SVGElement).style.animation = "flowDash 2.5s linear infinite";
+              });
+            }, 700);
+
+            // Draw output paths
+            setTimeout(() => {
+              document.querySelectorAll(".orch-output-path").forEach((p) => {
+                p.setAttribute("opacity", "0.7");
+                (p as SVGElement).style.strokeDashoffset = "0";
+              });
+            }, 950);
+          });
+        }
+      },
+      { threshold: 0.1 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [buildWires]);
 
   return (
     <div className="bg-card" style={{ padding: "120px 80px" }}>
@@ -138,43 +314,26 @@ const IntelligenceTab = () => {
         I designed and deployed the marketing intelligence infrastructure that connects every customer touchpoint into a centralized system — transforming fragmented signals into unified insights, and activating them across every channel in real time.
       </p>
 
-      <div className="relative w-full" style={{ height: 520 }}>
-        {/* SVG connection lines */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" preserveAspectRatio="none">
-          {/* Source nodes to center - dashed lines */}
-          {[
-            { x1: "12%", y1: "12%", x2: "50%", y2: "50%" },
-            { x1: "12%", y1: "35%", x2: "50%", y2: "50%" },
-            { x1: "12%", y1: "58%", x2: "50%", y2: "50%" },
-            { x1: "12%", y1: "81%", x2: "50%", y2: "50%" },
-            { x1: "27%", y1: "8%", x2: "50%", y2: "50%" },
-            { x1: "27%", y1: "92%", x2: "50%", y2: "50%" },
-          ].map((l, i) => (
-            <line key={`in-${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2}
-              stroke="hsl(160, 55%, 38%)" strokeWidth="1" strokeDasharray="4 6"
-              opacity="0.5" style={{ animation: "flowDash 3s linear infinite" }}
-            />
-          ))}
-          {/* Center to output nodes - solid lines */}
-          {[
-            { x1: "50%", y1: "50%", x2: "83%", y2: "10%" },
-            { x1: "50%", y1: "50%", x2: "83%", y2: "30%" },
-            { x1: "50%", y1: "50%", x2: "83%", y2: "50%" },
-            { x1: "50%", y1: "50%", x2: "83%", y2: "70%" },
-            { x1: "50%", y1: "50%", x2: "83%", y2: "90%" },
-          ].map((l, i) => (
-            <line key={`out-${i}`} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2}
-              stroke="hsl(160, 55%, 38%)" strokeWidth="1.5" opacity="0.4"
-            />
-          ))}
-        </svg>
-        {/* Source nodes - left */}
+      <div ref={containerRef} className="relative w-full" style={{ height: 520 }}>
+        <svg ref={svgRef} className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid meet" />
+
+        {/* Source nodes LEFT */}
         <div className="absolute left-[2%] top-0 bottom-0 flex flex-col justify-around" style={{ width: 100 }}>
           {sources.slice(0, 4).map((s, i) => (
-            <div key={i} className="flex flex-col items-center gap-2">
+            <div key={i} id={s.id} className="flex flex-col items-center gap-2" style={{
+              opacity: visible ? 1 : 0,
+              transform: visible ? "scale(1)" : "scale(0.85)",
+              transition: `opacity 0.5s ease ${i * 0.13}s, transform 0.5s ease ${i * 0.13}s`,
+            }}>
               <div
                 className="flex items-center justify-center text-[22px] rounded-lg"
-                style={{ width: 52, height: 52, border: "1px solid hsl(var(--border))", background: "hsl(var(--card))" }}
+                style={{
+                  width: 52, height: 52,
+                  border: visible ? "1px solid hsl(var(--primary))" : "1px solid hsl(var(--border))",
+                  background: visible ? "rgba(47,163,127,0.1)" : "hsl(var(--card))",
+                  boxShadow: visible ? "0 0 20px rgba(47,163,127,0.25)" : "none",
+                  transition: "all 0.3s ease",
+                }}
               >
                 {s.icon}
               </div>
@@ -186,45 +345,59 @@ const IntelligenceTab = () => {
         </div>
 
         {/* Extra source nodes */}
-        <div className="absolute left-[22%] top-[4%] flex flex-col items-center gap-2">
-          <div className="flex items-center justify-center text-[22px] rounded-lg" style={{ width: 52, height: 52, border: "1px solid hsl(var(--border))", background: "hsl(var(--card))" }}>
+        <div id={sources[4].id} className="absolute left-[22%] top-[4%] flex flex-col items-center gap-2" style={{
+          opacity: visible ? 1 : 0,
+          transform: visible ? "scale(1)" : "scale(0.85)",
+          transition: "opacity 0.5s ease 0.52s, transform 0.5s ease 0.52s",
+        }}>
+          <div className="flex items-center justify-center text-[22px] rounded-lg" style={{
+            width: 52, height: 52,
+            border: visible ? "1px solid hsl(var(--primary))" : "1px solid hsl(var(--border))",
+            background: visible ? "rgba(47,163,127,0.1)" : "hsl(var(--card))",
+            boxShadow: visible ? "0 0 20px rgba(47,163,127,0.25)" : "none",
+            transition: "all 0.3s ease",
+          }}>
             {sources[4].icon}
           </div>
           <div className="font-sans text-[9px] tracking-[0.12em] uppercase text-muted-foreground text-center max-w-[70px] leading-[1.4]">{sources[4].label}</div>
         </div>
-        <div className="absolute left-[22%] bottom-[4%] flex flex-col items-center gap-2">
-          <div className="flex items-center justify-center text-[22px] rounded-lg" style={{ width: 52, height: 52, border: "1px solid hsl(var(--border))", background: "hsl(var(--card))" }}>
+        <div id={sources[5].id} className="absolute left-[22%] bottom-[4%] flex flex-col items-center gap-2" style={{
+          opacity: visible ? 1 : 0,
+          transform: visible ? "scale(1)" : "scale(0.85)",
+          transition: "opacity 0.5s ease 0.65s, transform 0.5s ease 0.65s",
+        }}>
+          <div className="flex items-center justify-center text-[22px] rounded-lg" style={{
+            width: 52, height: 52,
+            border: visible ? "1px solid hsl(var(--primary))" : "1px solid hsl(var(--border))",
+            background: visible ? "rgba(47,163,127,0.1)" : "hsl(var(--card))",
+            boxShadow: visible ? "0 0 20px rgba(47,163,127,0.25)" : "none",
+            transition: "all 0.3s ease",
+          }}>
             {sources[5].icon}
           </div>
           <div className="font-sans text-[9px] tracking-[0.12em] uppercase text-muted-foreground text-center max-w-[70px] leading-[1.4]">{sources[5].label}</div>
         </div>
 
         {/* Center CDP */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10" style={{
+          opacity: visible ? 1 : 0,
+          transition: "opacity 0.6s ease 0.5s",
+        }}>
           <div className="relative">
-            {/* Pulse rings */}
             <div className="absolute left-1/2 top-1/2 pointer-events-none">
-              <div className="absolute" style={{ width: 160, height: 160, border: "1px solid rgba(47,163,127,0.25)", borderRadius: "50%", animation: "pulsering 2.5s ease-in-out infinite" }} />
-              <div className="absolute" style={{ width: 195, height: 195, border: "1px solid rgba(47,163,127,0.25)", borderRadius: "50%", animation: "pulsering 2.5s ease-in-out infinite 0.8s" }} />
+              <div className="absolute" style={{ width: 160, height: 160, border: "1px solid rgba(47,163,127,0.25)", borderRadius: "50%", animation: "pulsering 2.5s ease-in-out infinite", transform: "translate(-50%,-50%)" }} />
+              <div className="absolute" style={{ width: 195, height: 195, border: "1px solid rgba(47,163,127,0.25)", borderRadius: "50%", animation: "pulsering 2.5s ease-in-out infinite 0.8s", transform: "translate(-50%,-50%)" }} />
             </div>
             <div
               className="flex flex-col items-center justify-center gap-1 relative cursor-pointer"
               style={{
-                width: 130,
-                height: 130,
+                width: 130, height: 130,
                 border: "1px solid hsl(var(--primary))",
                 background: "hsl(var(--card))",
                 borderRadius: 4,
               }}
             >
-              <div
-                className="absolute"
-                style={{
-                  inset: 6,
-                  border: "1px solid hsl(var(--primary-deep))",
-                  animation: "rotateBorder 8s linear infinite",
-                }}
-              />
+              <div className="absolute" style={{ inset: 6, border: "1px solid hsl(var(--primary-deep))", animation: "rotateBorder 8s linear infinite" }} />
               <div className="text-[28px]">⬡</div>
               <div className="font-display text-[11px] font-bold tracking-[0.1em] uppercase text-primary">Centralized</div>
               <div className="font-sans text-[9px] text-muted-foreground tracking-[0.08em]">Data · Intelligence</div>
@@ -232,23 +405,21 @@ const IntelligenceTab = () => {
           </div>
         </div>
 
-        {/* Output nodes - right */}
+        {/* Output nodes RIGHT */}
         <div className="absolute right-[2%] top-0 bottom-0 flex flex-col justify-around" style={{ width: 180 }}>
           {outputs.map((o, i) => (
-            <div key={i} className="flex items-start gap-2.5">
-              <div
-                className="flex items-center gap-2.5"
-                style={{
-                  padding: "10px 16px",
-                  background: "hsl(var(--secondary))",
-                  border: "1px solid hsl(var(--border))",
-                  minWidth: 160,
-                }}
-              >
-                <div
-                  className="animate-blink"
-                  style={{ width: 6, height: 6, borderRadius: "50%", background: o.color, flexShrink: 0 }}
-                />
+            <div key={i} id={o.id} className="flex items-start gap-2.5" style={{
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateX(0)" : "translateX(16px)",
+              transition: `opacity 0.5s ease ${0.9 + i * 0.15}s, transform 0.5s ease ${0.9 + i * 0.15}s`,
+            }}>
+              <div className="flex items-center gap-2.5" style={{
+                padding: "10px 16px",
+                background: "hsl(var(--secondary))",
+                border: "1px solid hsl(var(--border))",
+                minWidth: 160,
+              }}>
+                <div className="animate-blink" style={{ width: 6, height: 6, borderRadius: "50%", background: o.color, flexShrink: 0 }} />
                 <span className="font-sans text-[11px] tracking-[0.08em] text-foreground">{o.label}</span>
               </div>
             </div>
@@ -286,7 +457,6 @@ const SegmentationTab = () => {
       </div>
 
       <div className="grid grid-cols-[300px_1fr] mb-12" style={{ gap: "2px", background: "hsl(var(--border))" }}>
-        {/* RFM Dimensions */}
         <div className="flex flex-col" style={{ gap: "2px", background: "hsl(var(--border))" }}>
           {dims.map((d) => (
             <div key={d.letter} className="bg-card rounded" style={{ padding: "28px 24px", borderLeft: "3px solid hsl(var(--border))" }}>
@@ -305,7 +475,6 @@ const SegmentationTab = () => {
           ))}
         </div>
 
-        {/* Segments */}
         <div className="bg-card flex flex-col">
           <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground" style={{ padding: "24px 32px 16px", borderBottom: "1px solid hsl(var(--border))" }}>
             Customer Segments → Lifecycle Stages
@@ -327,7 +496,6 @@ const SegmentationTab = () => {
         </div>
       </div>
 
-      {/* Activation flow */}
       <div
         className="grid grid-cols-[1fr_auto_1fr] items-center gap-6 bg-card"
         style={{ border: "1px solid hsl(var(--border))", borderTop: "2px solid hsl(var(--primary))", padding: 32, borderRadius: "0 0 8px 8px" }}
@@ -380,7 +548,6 @@ const ActivationTab = () => {
         Intelligence and segmentation are only as valuable as the system that acts on them. This layer connects unified customer profiles, behavioral signals, and workflow automation into a repeatable engine.
       </p>
 
-      {/* Architecture */}
       <div className="grid grid-cols-3 gap-6 mb-12">
         {[
           { icon: "⬡", title: "Unified Data Layer", sub: "CDP · CRM · Signals", arrow: "segment & score" },
@@ -396,7 +563,6 @@ const ActivationTab = () => {
         ))}
       </div>
 
-      {/* Layers */}
       <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: "1px", background: "hsl(var(--border))", border: "1px solid hsl(var(--border))", borderRadius: 8, overflow: "hidden" }}>
         {layers.map((l) => (
           <div key={l.num} className="bg-card hover:bg-secondary transition-colors" style={{ padding: "28px 24px" }}>
@@ -416,7 +582,6 @@ const ActivationTab = () => {
           </div>
         ))}
       </div>
-
     </div>
   );
 };
@@ -462,9 +627,7 @@ const QxoStorySection = () => {
                 borderTopRightRadius: 8,
                 borderBottomLeftRadius: 0,
                 borderBottomRightRadius: 0,
-                border: activeTab === tab.id
-                  ? "1px solid hsl(var(--border))"
-                  : "1px solid hsl(var(--border))",
+                border: "1px solid hsl(var(--border))",
                 borderBottom: activeTab === tab.id
                   ? "1px solid hsl(var(--card))"
                   : "1px solid hsl(var(--border))",

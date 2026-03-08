@@ -21,8 +21,8 @@ const Navbar = () => {
       }}
     >
       <div className="flex items-center">
-        <Link to="/" className="font-display text-xl font-extrabold tracking-tight text-foreground">
-          AUDAPTI<span className="text-primary" style={{ fontStyle: "normal" }}>O</span>N
+        <Link to="/" className="font-display text-[28px] font-extrabold tracking-tight text-foreground no-underline">
+          Chad <em className="text-primary">Parker</em>
         </Link>
       </div>
       <ul className="hidden md:flex gap-8 list-none">
