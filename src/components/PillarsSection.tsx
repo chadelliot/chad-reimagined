@@ -22,6 +22,7 @@ const pillars = [
   },
   {
     num: "02",
+    tag: "Consulting",
     title: "Advisory",
     subtitle: "& AI Strategy",
     org: "Michaels · Gap",
