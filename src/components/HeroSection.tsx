@@ -125,7 +125,7 @@ const HeroSection = () => {
               className="absolute z-10 animate-fadeIn-badge"
               style={{
                 top: 24,
-                right: -16,
+                right: 0,
                 background: "hsl(var(--charcoal))",
                 border: "1px solid hsl(var(--charcoal-light))",
                 borderLeft: "3px solid hsl(var(--primary))",

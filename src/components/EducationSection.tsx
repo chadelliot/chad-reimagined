@@ -35,7 +35,7 @@ const EducationSection = () => {
 
       {/* Certifications */}
       <div
-        className="grid grid-cols-5"
+        className="grid grid-cols-2 md:grid-cols-5"
         style={{ gap: "1px", background: "hsl(var(--border))", border: "1px solid hsl(var(--border))" }}
       >
         {certifications.map((cert) => (

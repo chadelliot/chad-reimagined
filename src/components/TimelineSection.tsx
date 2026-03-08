@@ -147,7 +147,7 @@ const TimelineSection = () => {
             </div>
 
             {/* Body grid */}
-            <div className="grid grid-cols-[1fr_280px] gap-10 items-start">
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-6 md:gap-10 items-start">
               <div>
                 <p className="font-sans text-[13px] leading-[1.8] mb-5" style={{ color: "hsl(var(--charcoal))" }}>
                   {job.description}
