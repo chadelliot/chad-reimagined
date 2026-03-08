@@ -13,12 +13,25 @@ const skills = [
 
 const MarqueeStrip = () => {
   return (
-    <div className="bg-secondary py-4 overflow-hidden">
-      <div className="animate-marquee flex whitespace-nowrap">
+    <div
+      className="overflow-hidden"
+      style={{
+        borderTop: "1px solid hsl(var(--border))",
+        borderBottom: "1px solid hsl(var(--border))",
+        padding: "16px 0",
+        background: "hsl(var(--charcoal))",
+      }}
+    >
+      <div className="flex animate-marquee" style={{ width: "max-content", gap: 0 }}>
         {[...skills, ...skills].map((skill, i) => (
-          <span key={i} className="text-xs tracking-widest-custom text-muted-foreground mx-6">
-            {skill} <span className="text-primary ml-6">·</span>
-          </span>
+          <div
+            key={i}
+            className="flex items-center font-sans text-[10px] tracking-[0.2em] uppercase text-[#888] whitespace-nowrap"
+            style={{ gap: 32, padding: "0 40px" }}
+          >
+            {skill}
+            <span className="text-primary text-[14px]">·</span>
+          </div>
         ))}
       </div>
     </div>

@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const pillars = [
   {
     num: "01",
@@ -13,7 +15,7 @@ const pillars = [
     ],
     stat: "$1B+",
     statLabel: "Digital Revenue Influence",
-    link: "#qxo-story",
+    link: "/approach",
     linkLabel: "View QXO Story →",
   },
   {
@@ -30,7 +32,7 @@ const pillars = [
     ],
     stat: "2",
     statLabel: "National Retail Advisory Clients",
-    link: "#timeline",
+    link: "/career",
     linkLabel: "View Client Work →",
   },
   {
@@ -49,56 +51,83 @@ const pillars = [
     statLabel: "Annual Ecommerce Revenue",
     link: "https://hiddengemsmd.com/courses/blueprint/",
     linkLabel: "View The Blueprint →",
+    external: true,
   },
 ];
 
+const SectionHeader = ({ num, title, em }: { num: string; title: string; em: string }) => (
+  <div className="flex items-center gap-5 mb-16">
+    <span className="font-mono text-[11px] text-primary tracking-[0.1em]">{num}</span>
+    <h2
+      className="font-display font-extrabold leading-none tracking-[-0.025em]"
+      style={{ fontSize: "clamp(36px, 4vw, 54px)" }}
+    >
+      {title} <em className="text-primary">{em}</em>
+    </h2>
+    <div className="flex-1 h-[1px] bg-border" />
+  </div>
+);
+
 const PillarsSection = () => {
   return (
-    <section id="pillars" className="py-24 px-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex items-center gap-4 mb-4">
-          <span className="text-primary font-bold text-sm">01</span>
-          <div className="w-8 h-[1px] bg-primary" />
-        </div>
-        <h2 className="text-4xl md:text-5xl font-bold text-foreground">
-          Three <span className="font-display italic text-primary">Pillars</span>
-        </h2>
-        <p className="mt-4 text-muted-foreground max-w-3xl leading-relaxed">
-          My career spans enterprise growth leadership, advisory work for national retail brands, and entrepreneurship—united by a focus on segmentation, marketing intelligence, lifecycle strategy, and building systems that turn insight into measurable revenue growth.
-        </p>
+    <section style={{ padding: "120px 80px" }} className="bg-background">
+      <SectionHeader num="01" title="Three" em="Pillars" />
+      <p className="font-sans text-[14px] text-muted-foreground leading-[1.8] max-w-[600px] mb-16">
+        My career spans enterprise growth leadership, advisory work for national retail brands, and entrepreneurship—united by a focus on segmentation, marketing intelligence, lifecycle strategy, and building systems that turn insight into measurable revenue growth.
+      </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-16">
-          {pillars.map((p) => (
-            <div key={p.num} className="border border-border rounded-xl p-8 hover:shadow-lg transition-shadow group">
-              <span className="text-[10px] tracking-widest-custom text-muted-foreground">Pillar {p.num}</span>
-              <h3 className="text-2xl font-bold mt-2 text-foreground">{p.title}</h3>
-              <p className="text-2xl font-bold text-primary font-display italic">{p.subtitle}</p>
-              <p className="text-xs tracking-widest-custom text-muted-foreground mt-3">{p.org}</p>
-              <p className="text-sm text-muted-foreground mt-4 leading-relaxed">{p.description}</p>
-              <ul className="mt-4 space-y-2">
-                {p.bullets.map((b, i) => (
-                  <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
-                    <span className="text-primary mt-1 shrink-0">•</span>
-                    {b}
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-6 pt-6 border-t border-border">
-                <p className="text-3xl font-bold text-primary">{p.stat}</p>
-                <p className="text-[10px] tracking-widest-custom text-muted-foreground mt-1">{p.statLabel}</p>
-              </div>
+      <div
+        className="grid grid-cols-1 lg:grid-cols-3"
+        style={{ gap: "1px", background: "hsl(var(--border))", border: "1px solid hsl(var(--border))", borderRadius: 8, overflow: "hidden" }}
+      >
+        {pillars.map((p) => (
+          <div key={p.num} className="bg-card hover:bg-secondary transition-colors relative overflow-hidden group" style={{ padding: "36px 32px" }}>
+            {/* Top accent line on hover */}
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary transform scale-x-0 origin-left transition-transform duration-400 group-hover:scale-x-100" />
+
+            <span className="font-mono text-[10px] tracking-[0.15em] uppercase text-muted-foreground">Pillar {p.num}</span>
+            <h3 className="font-display text-[22px] font-extrabold mt-2 text-foreground tracking-[-0.02em]">{p.title}</h3>
+            <p className="font-display text-[22px] font-extrabold text-primary italic">{p.subtitle}</p>
+            <p className="font-mono text-[9px] tracking-[0.12em] uppercase text-muted-foreground mt-3">{p.org}</p>
+            <p className="font-sans text-[12px] text-muted-foreground mt-4 leading-[1.7]">{p.description}</p>
+
+            <ul className="mt-4 flex flex-col gap-2.5">
+              {p.bullets.map((b, i) => (
+                <li key={i} className="font-sans text-[12px] text-muted-foreground flex items-start gap-3 leading-[1.6]">
+                  <span className="text-primary flex-shrink-0 mt-[1px] text-[10px]">▸</span>
+                  {b}
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-6 pt-6" style={{ borderTop: "1px solid hsl(var(--border))" }}>
+              <p className="font-display text-[28px] font-extrabold text-primary leading-none">{p.stat}</p>
+              <p className="font-sans text-[10px] tracking-[0.15em] uppercase text-muted-foreground mt-1">{p.statLabel}</p>
+            </div>
+
+            {p.external ? (
               <a
                 href={p.link}
-                className="mt-4 inline-block text-sm font-medium text-primary hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-flex items-center gap-2 text-[11px] font-sans tracking-[0.12em] uppercase text-primary border border-primary/50 px-[18px] py-[10px] rounded bg-primary/[0.06] hover:bg-primary/[0.14] hover:border-primary transition-all cursor-pointer no-underline"
               >
                 {p.linkLabel}
               </a>
-            </div>
-          ))}
-        </div>
+            ) : (
+              <Link
+                to={p.link}
+                className="mt-4 inline-flex items-center gap-2 text-[11px] font-sans tracking-[0.12em] uppercase text-primary border border-primary/50 px-[18px] py-[10px] rounded bg-primary/[0.06] hover:bg-primary/[0.14] hover:border-primary transition-all cursor-pointer no-underline"
+              >
+                {p.linkLabel}
+              </Link>
+            )}
+          </div>
+        ))}
       </div>
     </section>
   );
 };
 
 export default PillarsSection;
+export { SectionHeader };
