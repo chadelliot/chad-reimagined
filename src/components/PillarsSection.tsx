@@ -93,7 +93,7 @@ const PillarsSection = () => {
             <span className="font-mono text-[10px] tracking-[0.15em] uppercase text-muted-foreground">{p.tag}</span>
             <h3 className="font-display text-[22px] font-extrabold mt-2 text-foreground tracking-[-0.02em]">{p.title}</h3>
             <p className="font-display text-[22px] font-extrabold text-primary italic">{p.subtitle}</p>
-            <p className="font-mono text-[9px] tracking-[0.12em] uppercase text-muted-foreground mt-3">{p.org}</p>
+            {!p.logos && <p className="font-mono text-[9px] tracking-[0.12em] uppercase text-muted-foreground mt-3">{p.org}</p>}
             {p.logos && (
               <div className="flex items-center gap-4 mt-3">
                 {p.logos.map((logo, li) => (
