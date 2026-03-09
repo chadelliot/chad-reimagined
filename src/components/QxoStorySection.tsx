@@ -97,7 +97,7 @@ const StoryOverview = () => {
       backgroundSize: "56px 56px",
     }}>
       {/* 12-Month Playbook badge — top right */}
-      <div className="absolute top-4 right-4 md:top-8 md:right-8 flex items-center gap-2.5 px-4 py-3 rounded-lg border border-primary/30 bg-card shadow-sm"
+      <div className="relative md:absolute mt-2 mb-4 md:mt-0 md:mb-0 md:top-8 md:right-8 inline-flex items-center gap-2.5 px-4 py-3 rounded-lg border border-primary/30 bg-card shadow-sm"
         style={{ background: "linear-gradient(135deg, rgba(47,163,127,0.08), rgba(47,163,127,0.02))" }}>
         <div className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-primary relative">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="hsl(160, 55%, 38%)" strokeWidth="2" strokeLinecap="round">
@@ -115,7 +115,7 @@ const StoryOverview = () => {
       </div>
 
       {/* Section intro */}
-      <p className="max-w-[520px] font-sans text-[15px] md:text-[16px] leading-[1.85] text-muted-foreground mb-2">
+      <p className="max-w-[520px] font-sans text-[15px] md:text-[16px] leading-[1.85] text-muted-foreground mb-2 md:pr-[220px]">
         <span className="font-display font-semibold text-foreground text-[16px] md:text-[17px]">Refined through real-world execution,</span>{" "}
         this framework brings a repeatable approach to building scalable marketing engines.
       </p>
