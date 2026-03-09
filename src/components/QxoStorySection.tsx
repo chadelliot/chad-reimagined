@@ -679,13 +679,18 @@ const QxoStorySection = () => {
       </div>
 
       {/* File-folder tab bar */}
-      <div className="sticky top-14 md:top-16 z-40 bg-background px-4 md:px-20 overflow-x-auto">
-        <div className="flex gap-0 items-end min-w-max">
+      <div className="sticky top-14 md:top-16 z-40 bg-background px-4 md:px-20">
+        <div className="flex gap-0 items-end overflow-x-auto scrollbar-hide" id="tab-bar-scroll">
           {tabs.map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`relative px-5 md:px-6 py-3 text-[10px] md:text-[11px] font-sans tracking-[0.12em] uppercase transition-all cursor-pointer whitespace-nowrap ${
+              id={`tab-${tab.id}`}
+              onClick={() => {
+                setActiveTab(tab.id);
+                const el = document.getElementById(`tab-${tab.id}`);
+                if (el) el.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+              }}
+              className={`relative px-5 md:px-6 py-3 text-[10px] md:text-[11px] font-sans tracking-[0.12em] uppercase transition-all cursor-pointer whitespace-nowrap flex-shrink-0 ${
                 activeTab === tab.id
                   ? "font-semibold z-10"
                   : "text-muted-foreground hover:text-foreground"
