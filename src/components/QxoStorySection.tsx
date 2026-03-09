@@ -670,7 +670,9 @@ const QxoStorySection = () => {
     <div>
       {/* Strategy in Action header */}
       <div className="px-6 pt-[60px] md:px-20 md:pt-20 bg-background">
-        <SectionHeader num="02" title="Building a Scalable Marketing" em="Infrastructure for Growth" />
+        <div className="w-full lg:w-[65%]">
+          <SectionHeader num="02" title="Building a Scalable Marketing" em="Infrastructure for Growth" />
+        </div>
         <p className="font-sans text-[14px] text-muted-foreground leading-[1.8] max-w-[700px] mb-8">
           I've developed a proven playbook for building scalable marketing infrastructure from scratch — establishing the data foundation, signal strategy, segmentation model, and activation engine required to drive growth. I know how to bring together the right people, platforms, and processes to make it operational within 12 to 24 months.
         </p>
